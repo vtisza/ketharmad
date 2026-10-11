@@ -98,7 +98,7 @@ function drawSetup() {
   $('#setup').innerHTML = `
     <div class="s-hero">
       <h1 class="s-title">Két <span class="stamp"><b>2/3</b></span> harmad</h1>
-      <p class="s-sub">Négy politikai erő, tizenhat év, egyetlen győztes. Böngészős változat gépi ellenfelekkel. A teljes szabálykönyv: <a href="../Kétharmad.html" target="_blank">Kétharmad.html</a>.</p>
+      <p class="s-sub">Négy politikai erő, tizenhat év, egyetlen győztes. Böngészős változat gépi ellenfelekkel. <a href="../Kétharmad.html" target="_blank">A teljes szabálykönyv elolvasása →</a></p>
     </div>
     ${c.spectate ? '' : `<div class="s-h">Válassz frakciót</div><div class="facs">${FACTIONS.map(facBtn).join('')}</div>`}
     <div class="s-grid">
@@ -735,7 +735,7 @@ function showHelp() {
   ];
   m.dataset.kind = 'help';
   m.innerHTML = `<div class="mbox help" style="max-width:820px"><h3>Gyorsreferencia</h3>
-    <p class="mp">A teljes szabálykönyv: <a href="../Kétharmad.html" target="_blank" style="color:var(--gold)">Kétharmad.html</a></p>
+    <p class="mp"><a href="../Kétharmad.html" target="_blank" style="color:var(--gold)">A teljes szabálykönyv elolvasása →</a></p>
     <h4>A köröd</h4><ol>
       <li><b>Ébredés</b> — visszafordítod a lapjaidat; ha a kezdő jön, új forduló: felfordul egy Esemény, és a bal szélső Hírfolyam-lap cserélődik.</li>
       <li><b>Húzás</b> — húzol egy lapot (a kezdő az első körében nem); 6+ Botránynál −1 Támogatottság. Üres pakli: −2 Támogatottság.</li>

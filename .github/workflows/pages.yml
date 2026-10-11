@@ -29,6 +29,9 @@ jobs:
           rm -rf _site/tools
           cp LICENSE _site/LICENSE.txt
           cp "Kétharmad.html" _site/
+          # The rulebook moves into the game folder, so its game/ asset paths become relative
+          sed -i 's#"game/art-v2\.#"art-v2.#g' "_site/Kétharmad.html"
+          ! grep -q '"game/' "_site/Kétharmad.html"
           sed -i 's#\.\./Kétharmad\.html#Kétharmad.html#g' _site/ui.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
