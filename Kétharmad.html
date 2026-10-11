@@ -594,7 +594,7 @@ function cardHTML(c, opts={}){
   const dense = textLen>330?"xxdense":(textLen>285?"xdense":(textLen>215?"dense":""));
   let art;
   if(typeof cardIllustration === "function" && CARD_IMAGES[c.n]){
-    art = cardIllustration(c.n, true);
+    art = cardIllustration(c.n);
     if(c.t === "Esemény") art += `<span class="c-art-year">${c.year}</span>`;
   } else if(c.t==="Esemény"){
     art = `<span class="c-year">${c.year}</span><span class="msym side">${c.i}</span>`;

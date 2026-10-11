@@ -1,5 +1,5 @@
 // Generated ink-and-gouache artwork. Paths resolve from this script in both pages.
-const CARD_IMAGE_BASE = new URL('assets/cards/', document.currentScript.src).href;
+const CARD_IMAGE_BASE = new URL('assets/cards/sm/', document.currentScript.src).href;
 const CARD_IMAGES = {
   "Állami megrendelés": "000.webp",
   "Megyei lapok": "001.webp",
