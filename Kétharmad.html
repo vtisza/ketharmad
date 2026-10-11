@@ -1,0 +1,744 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="game/art-v2.css"></head><body>
+<title>Kétharmad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow+Semi+Condensed:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0&display=block">
+<style>
+/* Layout: ballot-paper rulebook — sticky TOC rail + reading column; cards as printed objects in a gallery. */
+:root{
+  --paper:#E8EBE6; --panel:#F5F6F2; --ink:#151817; --muted:#56605A; --line:#C6CDC6;
+  --stamp:#B42318; --stamp-soft:#B4231814; --chip:#DDE2DC;
+  --ner:#E2700C; --osz:#6D3EA2; --tis:#1B5FAE; --rad:#4A6A28; --saj:#3A4046; --kor:#86683A; --jel:#676C70;
+  --face:#F2F0EA; --face-ink:#1B1A18; --face-muted:#5A564E;
+  --pip-f:#D7A21E; --pip-m:#2A9CC2; --pip-u:#D2483F; --pip-g:#C4C0B7;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --text:"Crimson Pro",Georgia,"Times New Roman",serif;
+  --ui:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111413; --panel:#191D1B; --ink:#E6E9E4; --muted:#9BA49E; --line:#2B322E;
+  --stamp:#E8604F; --stamp-soft:#E8604F1A; --chip:#232926; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111413; --panel:#191D1B; --ink:#E6E9E4; --muted:#9BA49E; --line:#2B322E;
+  --stamp:#E8604F; --stamp-soft:#E8604F1A; --chip:#232926; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:19px;line-height:1.5;margin:0}
+.msym{font-family:"Material Symbols Outlined";font-weight:300;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";-webkit-font-smoothing:antialiased;display:inline-block;overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--stamp);outline-offset:2px}
+
+/* ── top bar ── */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;gap:18px;align-items:center;justify-content:space-between}
+.brand{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:.04em;text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand .mini-stamp{width:26px;height:26px;border:2.5px solid var(--stamp);border-radius:50%;display:grid;place-items:center;color:var(--stamp);font-size:13px;font-weight:900}
+.bar nav{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.bar nav a{font-family:var(--ui);font-weight:600;font-size:15px;text-decoration:none;padding:5px 10px;border-radius:4px;letter-spacing:.03em;text-transform:uppercase}
+.bar nav a:hover{background:var(--chip)}
+@media (max-width:640px){.bar nav a{font-size:13px;padding:4px 6px}.brand{font-size:18px}}
+
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
+
+/* ── hero ── */
+.hero{overflow-x:clip;padding-block:48px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr);padding-block:28px 24px}}
+.eyebrow{font-family:var(--ui);font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--stamp)}
+.title{font-family:var(--display);font-weight:900;font-size:clamp(64px,11vw,148px);line-height:.86;letter-spacing:.005em;margin:.1em 0 .12em;display:flex;align-items:center;gap:.12em;flex-wrap:wrap}
+.stamp{flex:none;width:.8em;height:.8em;border:.055em solid var(--stamp);border-radius:50%;display:grid;place-items:center;color:var(--stamp);transform:rotate(-10deg);box-shadow:inset 0 0 0 .04em var(--paper),inset 0 0 0 .07em var(--stamp)}
+.stamp b{font-size:.42em;font-weight:900;letter-spacing:-.04em;line-height:1}
+.lede{font-size:clamp(19px,1.7vw,23px);max-width:34em;margin:0 0 20px;text-wrap:pretty}
+.specs{display:flex;flex-wrap:wrap;gap:0;border:1.5px solid var(--ink);width:fit-content;max-width:100%}
+.specs div{padding:8px 14px;border-right:1.5px solid var(--ink);font-family:var(--ui);font-size:14px;letter-spacing:.06em;text-transform:uppercase;line-height:1.15}
+.specs div:last-child{border-right:0}
+.specs b{display:block;font-family:var(--display);font-size:26px;letter-spacing:0;font-weight:800}
+@media (max-width:520px){.specs div{padding:6px 9px;font-size:12px}.specs b{font-size:21px}}
+.fan{position:relative;height:clamp(330px,40vw,470px);min-width:0}
+.fan .card{position:absolute;width:clamp(170px,19vw,250px);left:50%;top:50%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.fan .card:nth-child(1){transform:translate(-128%,-46%) rotate(-12deg)}
+.fan .card:nth-child(2){transform:translate(-80%,-54%) rotate(-4deg)}
+.fan .card:nth-child(3){transform:translate(-30%,-52%) rotate(4deg)}
+.fan .card:nth-child(4){transform:translate(18%,-44%) rotate(12deg)}
+.fan:hover .card:nth-child(1){transform:translate(-150%,-46%) rotate(-14deg)}
+.fan:hover .card:nth-child(4){transform:translate(40%,-44%) rotate(14deg)}
+.fan .card:hover{z-index:5;transform:translate(var(--hx,-50%),-60%) rotate(0) scale(1.04)!important}
+@media (max-width:520px){.fan{height:300px}.fan .card{width:150px}}
+.disclaimer{margin-top:22px;font-family:var(--ui);font-size:15px;line-height:1.4;color:var(--muted);max-width:44em;border-left:3px solid var(--stamp);padding-left:12px}
+
+/* ── sections ── */
+section{scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:16px;border-top:3px solid var(--ink);padding-top:14px;margin:56px 0 22px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--display);font-weight:900;font-size:clamp(38px,5vw,60px);line-height:1;margin:0;letter-spacing:.01em;text-transform:uppercase}
+.sec-head p{margin:0;font-family:var(--ui);color:var(--muted);font-size:16px;letter-spacing:.04em}
+
+/* factions */
+.factions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:1000px){.factions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.factions{grid-template-columns:1fr}}
+.fac{background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+.fac-top{background:var(--fc);color:#fff;padding:14px 16px 12px;position:relative;overflow:hidden}
+.fac-top::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.22) 1.1px,transparent 1.4px);background-size:7px 7px;mask-image:linear-gradient(110deg,transparent 35%,#000)}
+.fac-top h3{font-family:var(--display);font-weight:900;font-size:36px;line-height:1;margin:0;text-transform:uppercase;position:relative;z-index:1}
+.fac-top span{font-family:var(--ui);font-size:14px;letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:1;opacity:.92}
+.fac-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.fac-body p{margin:0;font-size:17px;line-height:1.45}
+.fac-meta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-family:var(--ui);font-size:14px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;border-top:1px solid var(--line);padding-top:10px;gap:8px;flex-wrap:wrap}
+.dots i{display:inline-block;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink);margin-left:3px}
+.dots i.on{background:var(--ink)}
+
+/* rulebook */
+.rules{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:900px){.rules{grid-template-columns:minmax(0,1fr);gap:10px}}
+.toc{position:sticky;top:76px;font-family:var(--ui);font-size:15px;border-left:2px solid var(--line)}
+.toc a{display:flex;gap:8px;text-decoration:none;padding:4px 0 4px 12px;color:var(--muted);margin-left:-2px;border-left:2px solid transparent}
+.toc a:hover{color:var(--ink);border-left-color:var(--stamp)}
+.toc a b{font-weight:700;color:var(--stamp);min-width:1.6em}
+@media (max-width:900px){.toc{position:static;display:flex;flex-wrap:wrap;border:0;gap:4px}.toc a{border:1px solid var(--line);padding:3px 8px;margin:0;border-radius:3px}}
+.ch{margin-bottom:44px;min-width:0}
+.ch h3{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.05;margin:0 0 12px;display:flex;gap:12px;align-items:baseline;text-wrap:balance}
+.ch h3 small{font-family:var(--ui);font-weight:700;font-size:16px;color:var(--stamp);letter-spacing:.08em}
+.ch h4{font-family:var(--ui);font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;margin:22px 0 6px}
+.ch p,.ch li{max-width:40em;text-wrap:pretty}
+.ch p{margin:0 0 12px}
+.ch ul,.ch ol{padding-left:1.2em;margin:0 0 12px}
+.ch li{margin-bottom:6px}
+.ch li::marker{color:var(--stamp);font-family:var(--ui);font-weight:700}
+.note{background:var(--stamp-soft);border-left:3px solid var(--stamp);padding:12px 16px;margin:16px 0;max-width:42em;font-size:17.5px}
+.note b:first-child{font-family:var(--ui);letter-spacing:.08em;text-transform:uppercase;font-size:14px;color:var(--stamp);display:block;margin-bottom:2px}
+kbd,.kw{font-family:var(--ui);font-weight:700;font-size:.86em;letter-spacing:.02em;background:var(--chip);padding:1px 6px;border-radius:3px;white-space:nowrap}
+
+.win{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:46em;margin:6px 0 10px}
+@media (max-width:600px){.win{grid-template-columns:1fr}}
+.win div{border:1.5px solid var(--ink);padding:12px 14px;background:var(--panel)}
+.win h5{margin:0 0 4px;font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase}
+.win p{margin:0;font-size:17px}
+
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;max-width:46em;margin:8px 0 14px}
+.parts div{background:var(--panel);border:1px solid var(--line);padding:10px 12px;font-family:var(--ui);font-size:15px;line-height:1.3}
+.parts b{display:block;font-family:var(--display);font-size:28px;font-weight:800;line-height:1}
+
+.anatomy{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:start;margin:10px 0 16px}
+@media (max-width:700px){.anatomy{grid-template-columns:1fr}.anatomy .an-card{max-width:270px}}
+.an-card{position:relative;margin-inline:14px}
+.an-card .callout{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--stamp);color:#fff;font-family:var(--ui);font-weight:700;font-size:14px;display:grid;place-items:center;box-shadow:0 0 0 3px var(--paper);z-index:3}
+.an-list{list-style:none;padding:0!important;margin:0;counter-reset:an}
+.an-list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:6px;margin-bottom:10px;max-width:none}
+.an-list li::before{counter-increment:an;content:counter(an);width:24px;height:24px;border-radius:50%;background:var(--stamp);color:#fff;font-family:var(--ui);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:2px}
+.an-list b{font-family:var(--ui);letter-spacing:.03em}
+
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0 14px}
+.types div{border:1px solid var(--line);background:var(--panel);padding:10px 12px;font-size:16.5px;line-height:1.35}
+.types b{font-family:var(--ui);text-transform:uppercase;letter-spacing:.06em;font-size:14px;display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.types .msym{font-size:20px;color:var(--stamp)}
+
+.res{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 14px}
+.res div{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--panel);padding:8px 14px 8px 8px;font-family:var(--ui);font-size:15px;line-height:1.2}
+.res .pip{font-size:24px}
+.res b{display:block;font-size:17px}
+
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1.5px solid var(--ink);margin:10px 0 16px;counter-reset:ph}
+@media (max-width:820px){.phases{grid-template-columns:1fr}}
+.phases div{padding:12px 14px;border-right:1.5px solid var(--ink);background:var(--panel);min-width:0}
+.phases div:last-child{border-right:0}
+@media (max-width:820px){.phases div{border-right:0;border-bottom:1.5px solid var(--ink)}.phases div:last-child{border-bottom:0}}
+.phases h5{margin:0 0 4px;font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;display:flex;gap:8px;align-items:baseline}
+.phases h5::before{counter-increment:ph;content:counter(ph);font-family:var(--ui);font-size:14px;color:var(--stamp);font-weight:700}
+.phases p{margin:0;font-size:15.5px;line-height:1.38}
+
+.example{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:16px;align-items:center;border:1px dashed var(--muted);padding:14px;margin:12px 0 16px;max-width:52em}
+.example .card{width:190px}
+.example > p{margin:0;font-size:16.5px}
+@media (max-width:640px){.example{grid-template-columns:1fr 1fr}.example .card{width:100%}.example p{grid-column:1/-1}}
+
+table.kw-t{border-collapse:collapse;width:100%;font-size:16.5px}
+.tscroll{overflow-x:auto;max-width:100%}
+table.kw-t th,table.kw-t td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.kw-t th{font-family:var(--ui);text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:var(--muted)}
+table.kw-t td:first-child{font-family:var(--ui);font-weight:700;white-space:nowrap}
+table.kw-t td:nth-child(2){font-family:var(--ui);font-size:14px;color:var(--muted);white-space:nowrap}
+
+.tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:56em}
+@media (max-width:700px){.tips{grid-template-columns:1fr}}
+.tips div{border-top:5px solid var(--fc);background:var(--panel);padding:10px 14px;font-size:16.5px}
+.tips h5{margin:0 0 4px;font-family:var(--display);font-size:22px;text-transform:uppercase;font-weight:800}
+.tips ul{margin:0;padding-left:1.1em}
+
+/* gallery */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.filters button{font-family:var(--ui);font-weight:600;font-size:15px;letter-spacing:.04em;text-transform:uppercase;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:6px 12px;cursor:pointer;display:flex;gap:7px;align-items:center}
+.filters button i{width:10px;height:10px;border-radius:50%;background:var(--fc,var(--ink));display:inline-block}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.filters button span{font-weight:500;opacity:.7}
+.filters input{font-family:var(--ui);font-size:16px;padding:7px 10px;border:1.5px solid var(--ink);background:var(--panel);color:var(--ink);min-width:0;flex:1 1 180px;max-width:280px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:22px 18px}
+@media (max-width:480px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}}
+.gcount{font-family:var(--ui);color:var(--muted);font-size:15px;margin:-6px 0 16px;letter-spacing:.03em}
+
+/* ═════════ THE CARD ═════════ */
+.card{container-type:inline-size;position:relative;width:100%;aspect-ratio:63/88;max-width:100%}
+.frame{position:absolute;inset:0;border-radius:4.5cqw;background:var(--fc);padding:3.6cqw;display:flex;flex-direction:column;gap:2cqw;box-shadow:0 1px 0 rgba(0,0,0,.25),0 8px 22px -10px rgba(0,0,0,.45);overflow:hidden;color:var(--face-ink)}
+.frame::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) .55cqw,transparent .7cqw);background-size:3.4cqw 3.4cqw;pointer-events:none}
+.c-top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:2cqw;background:var(--face);border-radius:2cqw;padding:1.6cqw 2.4cqw;min-height:11cqw}
+.c-name{margin:0;font-family:var(--display);font-weight:800;font-size:7.6cqw;line-height:.95;letter-spacing:.01em;text-transform:uppercase;min-width:0;overflow-wrap:anywhere}
+.c-name.long{font-size:6.4cqw}
+.c-name.xlong{font-size:5.5cqw}
+.c-cost{display:flex;gap:.8cqw;flex:none}
+.pip{display:inline-grid;place-items:center;width:1.3em;height:1.3em;border-radius:50%;font-family:var(--ui);font-weight:700;font-style:normal;line-height:1;vertical-align:-.18em;box-shadow:inset 0 -.08em 0 rgba(0,0,0,.25)}
+.c-cost .pip{font-size:5.4cqw}
+.pip.F{background:var(--pip-f);color:#2A1E00}.pip.M{background:var(--pip-m);color:#fff}.pip.U{background:var(--pip-u);color:#fff}.pip.G{background:var(--pip-g);color:#222}.pip.T{background:#1E1E1E;color:#fff;font-size:.95em}
+.c-art{position:relative;flex:1 1 44%;min-height:0;border-radius:1.8cqw;overflow:hidden;background:radial-gradient(120% 90% at 70% 15%,color-mix(in srgb,var(--fc) 55%,#fff) 0%,var(--fc) 55%,color-mix(in srgb,var(--fc) 60%,#000) 100%);display:grid;place-items:center;border:.6cqw solid color-mix(in srgb,var(--fc) 70%,#000)}
+.c-art::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.28) .7cqw,transparent .85cqw);background-size:3cqw 3cqw;mask-image:linear-gradient(200deg,transparent 30%,#000 95%)}
+.c-art .msym{position:relative;font-size:30cqw;color:#fff;opacity:.95;text-shadow:0 .8cqw 0 rgba(0,0,0,.22)}
+.t-Szereplő .c-art .medal{position:relative;width:38cqw;height:38cqw;border-radius:50%;border:1.3cqw solid #fff;display:grid;place-items:center;background:color-mix(in srgb,var(--fc) 75%,#000);box-shadow:0 0 0 1.1cqw color-mix(in srgb,var(--fc) 70%,#000)}
+.t-Szereplő .c-art .medal .msym{font-size:21cqw}
+.c-art .ghost{position:absolute;right:-8cqw;bottom:-14cqw;font-size:62cqw!important;opacity:.13!important;transform:rotate(-12deg);text-shadow:none!important}
+.c-legend{position:absolute;left:2cqw;top:2cqw;font-family:var(--ui);font-weight:700;font-size:3.4cqw;letter-spacing:.12em;color:#fff;background:rgba(0,0,0,.35);padding:.5cqw 1.6cqw;border-radius:1cqw;z-index:2}
+.c-tag{position:absolute;right:2cqw;top:2cqw;font-family:var(--ui);font-weight:700;font-size:3.3cqw;letter-spacing:.08em;text-transform:uppercase;padding:.5cqw 1.6cqw;border-radius:1cqw;z-index:2}
+.c-tag.Független{background:#fff;color:#222}.c-tag.Kormányközeli{background:#E2700C;color:#fff}
+.c-respip{position:absolute;right:2.4cqw;bottom:2.4cqw;display:flex;gap:1cqw;z-index:2}
+.c-respip .pip{font-size:7cqw;box-shadow:0 0 0 .8cqw rgba(255,255,255,.85)}
+.c-year{position:relative;font-family:var(--display);font-weight:900;font-size:27cqw;color:#fff;line-height:.8;letter-spacing:-.01em;text-shadow:0 1cqw 0 rgba(0,0,0,.25)}
+.c-pile{position:absolute;left:2.4cqw;bottom:2cqw;font-family:var(--display);font-weight:900;font-size:8cqw;color:#fff;opacity:.85;z-index:2}
+.t-Esemény .c-art .msym.side{position:absolute;right:3cqw;bottom:2cqw;font-size:12cqw;opacity:.8}
+.c-type{position:relative;background:var(--face);border-radius:1.6cqw;padding:1.2cqw 2.4cqw;font-family:var(--ui);font-weight:600;font-size:3.9cqw;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-type b{font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.c-text{position:relative;background:var(--face);border-radius:1.8cqw;padding:2.2cqw 2.8cqw;font-family:var(--text);font-size:4.55cqw;line-height:1.22;flex:0 0 auto;min-height:30%;display:flex;flex-direction:column;gap:1.5cqw;overflow:hidden}
+.c-text.dense{font-size:4.1cqw}
+.c-text.xdense{font-size:3.75cqw}
+.c-text.xxdense{font-size:3.4cqw;line-height:1.17}
+.c-rem{font-style:italic;color:var(--face-muted);font-size:.88em}
+.c-text p{margin:0}
+.card .c-text p{margin:0!important;max-width:none!important;font-size:inherit!important}
+.c-text b{font-weight:600;font-family:var(--ui);letter-spacing:.01em}
+.c-text .pip{font-size:.95em}
+.c-flav{font-style:italic;color:var(--face-muted);border-top:.35cqw solid color-mix(in srgb,var(--fc) 45%,transparent);padding-top:1.4cqw;margin-top:auto!important}
+.c-foot{position:relative;display:flex;justify-content:space-between;align-items:center;color:#fff;font-family:var(--ui);font-weight:600;font-size:3.4cqw;letter-spacing:.08em;text-transform:uppercase;min-height:6cqw;margin-top:-.5cqw}
+.c-stats{position:absolute;right:-1cqw;bottom:-1.4cqw;background:var(--face);color:var(--face-ink);border:.9cqw solid color-mix(in srgb,var(--fc) 60%,#000);border-radius:2cqw;padding:.4cqw 2.4cqw;font-family:var(--display);font-weight:900;font-size:8.6cqw;line-height:1;letter-spacing:.02em;display:flex;align-items:baseline;gap:.6cqw}
+.c-stats i{font-style:normal;font-size:.7em;color:var(--face-muted)}
+.copies{position:absolute;top:-9px;right:-7px;z-index:4;background:var(--ink);color:var(--paper);font-family:var(--ui);font-weight:700;font-size:13px;padding:2px 7px;border-radius:10px}
+.f-NER{--fc:var(--ner)}.f-OSZ{--fc:var(--osz)}.f-TIS{--fc:var(--tis)}.f-RAD{--fc:var(--rad)}.f-SAJ{--fc:var(--saj)}.f-KOR{--fc:var(--kor)}.f-JEL{--fc:var(--jel)}
+.t-Bázis .c-art{flex-basis:60%}
+.t-Bázis .c-text{min-height:22%}
+
+
+/* test section */
+.t-intro p{max-width:46em;margin:0 0 16px;font-size:18px}
+.t-stats{display:flex;flex-wrap:wrap;border:1.5px solid var(--ink);width:fit-content;max-width:100%;margin-bottom:22px}
+.t-stats div{padding:8px 16px;border-right:1.5px solid var(--ink);font-family:var(--ui);font-size:14px;letter-spacing:.06em;text-transform:uppercase;line-height:1.15}
+.t-stats div:last-child{border-right:0}
+.t-stats b{display:block;font-family:var(--display);font-size:28px;letter-spacing:0;font-weight:800}
+@media (max-width:520px){.t-stats div{padding:6px 10px;font-size:12px}.t-stats b{font-size:22px}}
+.t-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;margin-bottom:18px}
+@media (max-width:860px){.t-grid{grid-template-columns:minmax(0,1fr)}}
+.t-grid h4,.t-h{font-family:var(--ui);font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 4px}
+.t-h{margin-top:30px}
+.t-cap{margin:0 0 10px;color:var(--muted);font-family:var(--ui);font-size:15px}
+table.mat{border-collapse:collapse;font-family:var(--ui);font-variant-numeric:tabular-nums}
+table.mat th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;text-align:center;font-weight:700}
+table.mat th.rh{text-align:left;padding-left:0}
+table.mat th i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--fc);margin-right:6px}
+table.mat td{width:76px;height:44px;text-align:center;font-weight:700;font-size:17px;border:2px solid var(--paper)}
+table.mat td.self{background:var(--chip);color:var(--muted);font-weight:500}
+table.mat tfoot td{font-size:15px;border:0;border-top:1.5px solid var(--ink);height:36px}
+.mp-row{display:grid;grid-template-columns:110px minmax(0,1fr) 52px;gap:10px;align-items:center;margin-bottom:8px;font-family:var(--ui);font-size:15px;font-variant-numeric:tabular-nums}
+.mp-bar{height:18px;background:var(--chip);position:relative}
+.mp-bar span{position:absolute;inset:0 auto 0 0;background:var(--fc)}
+.mp-bar::after{content:"";position:absolute;top:-4px;bottom:-4px;left:50%;border-left:1.5px dashed var(--ink)}
+.mp-row b{text-align:right}
+.mp-note{font-family:var(--ui);font-size:13px;color:var(--muted);margin-top:4px}
+.changes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.ch-grp{background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--fc)}
+.ch-grp h5{margin:0;padding:8px 12px 4px;font-family:var(--display);font-size:22px;font-weight:800;text-transform:uppercase}
+.ch-grp ul{list-style:none;margin:0;padding:0 12px 10px}
+.ch-grp li{padding:6px 0;border-top:1px solid var(--line);font-size:15.5px;line-height:1.35}
+.ch-grp li > b{font-family:var(--ui);font-weight:700;display:block;font-size:15px}
+.ch-grp .d{font-family:var(--ui);font-size:14px;color:var(--muted)}
+.ch-grp .d em{font-style:normal;color:var(--ink);font-weight:600}
+.ch-grp .pip{font-size:13px}
+
+/* quick ref */
+.qref{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1.5px solid var(--ink)}
+@media (max-width:900px){.qref{grid-template-columns:1fr}}
+.qref > div{padding:16px 18px;border-right:1.5px solid var(--ink);background:var(--panel);min-width:0}
+.qref > div:last-child{border-right:0}
+@media (max-width:900px){.qref > div{border-right:0;border-bottom:1.5px solid var(--ink)}.qref > div:last-child{border-bottom:0}}
+.qref h4{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;margin:0 0 8px}
+.qref ol,.qref ul{margin:0;padding-left:1.2em;font-size:16.5px}
+.qref li{margin-bottom:5px}
+
+footer.end{margin:60px 0 0;border-top:3px solid var(--ink);padding-block:18px 40px;font-family:var(--ui);color:var(--muted);font-size:15px;line-height:1.45}
+footer.end p{max-width:60em;margin:0 0 8px}
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#top"><span class="mini-stamp">⅔</span>KÉTHARMAD</a>
+    <nav aria-label="Fő navigáció">
+      <a href="#frakciok">Frakciók</a><a href="#szabalyok">Szabályok</a><a href="#lapok">Lapok</a><a href="#teszt">Tesztelés</a><a href="#gyors">Gyorsreferencia</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Stratégiai kártyajáték · NER-korszak · 2010–2026</div>
+      <h1 class="title"><span>KÉT</span><span class="stamp" aria-hidden="true"><b>2/3</b></span><span>HARMAD</span></h1>
+      <p class="lede">Négy politikai erő, tizenhat év, egyetlen győztes. Állíts csatasorba közszereplőket, építs intézményeket, urald a médiát, és buktasd le az ellenfeleidet, mielőtt ők buktatnak le téged. Minden lap a dobozban van, nincs gyűjtögetés és nincs booster.</p>
+      <div class="specs">
+        <div><b>2–4</b>játékos</div><div><b>40–60</b>perc</div><div><b>162</b>lap</div><div><b>14+</b>éves kortól</div>
+      </div>
+      <p class="disclaimer">Politikai szatíra. A lapok valódi közszereplők nyilvános szerepére épülnek. Az idézőjeles dőlt szövegek nyilvánosan elhangzott mondatok, a többi dőlt szöveg szerkesztői kommentár. A játék egyetlen pártot sem támogat, és mind a négy frakció nyerhet.</p>
+    </div>
+    <div class="fan" id="fan" aria-label="Mintalapok"></div>
+  </section>
+
+  <section id="frakciok">
+    <div class="sec-head"><h2>A négy frakció</h2><p>Mindegyik pakli 31 lap: 13 Bázis, 12 Szereplő és 6 Akció vagy Intézmény</p></div>
+    <div class="factions">
+      <article class="fac" style="--fc:var(--ner)"><div class="fac-top"><h3>NER</h3><span>Kormánypárt · Forint + Média</span></div><div class="fac-body"><p>Pénz, média, intézmények. A NER lapjai a költségükhöz képest a legerősebbek, cserébe Botrányt termelnek. Ha két Intézményed áll, Orbán Viktor <span class="kw">Kétharmad</span> képessége az egész csapatot erősíti.</p><div class="fac-meta"><span>Nehézség</span><span class="dots"><i class="on"></i><i class="on"></i><i></i></span></div></div></article>
+      <article class="fac" style="--fc:var(--osz)"><div class="fac-top"><h3>Összefogás</h3><span>Régi ellenzék · Média + Utca</span></div><div class="fac-body"><p>Hat párt, egy cél. Egyenként gyenge szereplők, de három különböző párttal bekapcsol az <span class="kw">Összefogás</span> és a <span class="kw">Közös jelölt</span>. A fő fegyvered a Leleplezés.</p><div class="fac-meta"><span>Nehézség</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span></div></div></article>
+      <article class="fac" style="--fc:var(--tis)"><div class="fac-top"><h3>Tisza</h3><span>Új kihívó · Utca + Média</span></div><div class="fac-body"><p>Kicsiből indul, és körről körre nő. A <span class="kw">Mozgalom</span> és a Szimpátia jelzők hízlalják a szereplőket, a <span class="kw">Disszidensek</span> olcsóbbak az intézményes ellenféllel szemben, a Felháborodás pedig az ellenfél botrányaiból él.</p><div class="fac-meta"><span>Nehézség</span><span class="dots"><i class="on"></i><i></i><i></i></span></div></div></article>
+      <article class="fac" style="--fc:var(--rad)"><div class="fac-top"><h3>Radikálisok</h3><span>Jobbik és Mi Hazánk · Utca + Média</span></div><div class="fac-body"><p>Gyors, kemény, utcai. <span class="kw">Radikális</span> magányos támadók, <span class="kw">Lendület</span> és közvetlen sebzés. Ha a tempó elfogy, a Határzár elvágja az ellenfél Támogatottság-forrásait. A pártszakadások új szereplőket szülnek.</p><div class="fac-meta"><span>Nehézség</span><span class="dots"><i class="on"></i><i></i><i></i></span></div></div></article>
+    </div>
+  </section>
+
+  <section id="szabalyok">
+    <div class="sec-head"><h2>Szabálykönyv</h2><p>5. kiadás · az első játékhoz elég az 1–7. fejezet</p></div>
+    <div class="rules">
+      <nav class="toc" aria-label="Fejezetek">
+        <a href="#r1"><b>1</b>A játék célja</a><a href="#r2"><b>2</b>Tartozékok</a><a href="#r3"><b>3</b>Előkészítés</a><a href="#r4"><b>4</b>A lap felépítése</a><a href="#r5"><b>5</b>Erőforrások</a><a href="#r6"><b>6</b>A kör menete</a><a href="#r7"><b>7</b>Kampány</a><a href="#r8"><b>8</b>Botrány és Leleplezés</a><a href="#r9"><b>9</b>Hírfolyam</a><a href="#r10"><b>10</b>Események</a><a href="#r11"><b>11</b>Kulcsszavak és fogalmak</a><a href="#r12"><b>12</b>Többjátékos és változatok</a><a href="#r13"><b>13</b>Stratégiai tippek</a>
+      </nav>
+      <div>
+        <div class="ch" id="r1">
+          <h3><small>§1</small>A játék célja</h3>
+          <p>Mindenki egy politikai erőt vezet a 2010 és 2026 közötti magyar közéletben, és <b>20 Támogatottsággal</b> kezd. Akinek a Támogatottsága 0-ra csökken, kiesik. <b>Az utolsó talpon maradt játékos nyer.</b> Nincs körlimit és nincs pontszámítás: addig játszotok, amíg egy játékos marad.</p>
+          <p>Ha egyszerre esne ki mindenki, az nyer, akinek éppen a köre van.</p>
+          <div class="note"><b>Két szó, két jelentés</b>A <b>kör</b> egy játékos sorra kerülése („a köröd”, „a kör végéig”). A <b>forduló</b> az, amíg mindenki sorra kerül egyszer, a kezdő játékostól a kezdő játékosig. Az Események egy fordulóig tartanak, minden más lap a körökre hivatkozik.</div>
+        </div>
+
+        <div class="ch" id="r2">
+          <h3><small>§2</small>Tartozékok</h3>
+          <div class="parts">
+            <div><b>4 × 31</b>frakciópakli: NER, Összefogás, Tisza, Radikálisok</div>
+            <div><b>12</b>Hírfolyam-lap: semleges sajtó, közös piac</div>
+            <div><b>18</b>Esemény-lap: a NER-korszak közéleti eseményei</div>
+            <div><b>8</b>jelzőlap: 4 Kerítés, 4 Szakadár</div>
+          </div>
+          <p>A dobozban nincs, de kell hozzá: kb. 40 <b>Botrány</b>-jelző (például piros korong), 30 <b>Szimpátia</b>-jelző (például kék korong), Támogatottság-számláló (papír és ceruza vagy két kocka), valamint egy hatoldalú kocka Márki-Zay Péterhez.</p>
+          <div class="note"><b>Kiegyensúlyozás</b>Mind a négy pakli szerkezete azonos: 13 Bázis (42%, a Magic 40%-ához közel), 12 Szereplő és 6 Akció vagy Intézmény. Minden Bázison ott a <span class="kw">Csere</span>, így a késői fölösleg sem holt lap. A számokat több mint 200 000 szimulált játszma alapján hangoltuk (lásd <a href="#teszt">Tesztelés</a>).</div>
+        </div>
+
+        <div class="ch" id="r3">
+          <h3><small>§3</small>Előkészítés</h3>
+          <ol>
+            <li>Mindenki választ egy frakciót. Ha ketten ugyanazt akarnátok, sorsoljatok.</li>
+            <li>Keverd meg a paklidat, és húzz <b>7 lapot</b>.</li>
+            <li><b>Mulligan.</b> Ha nem tetszik a kezed (például 0–1 vagy 6–7 Bázis van benne), keverd vissza, és húzz újra 7 lapot, majd tegyél a paklid aljára annyi lapot, ahányszor újrahúztál. Ezt addig ismételheted, amíg meg nem tartod a kezed.</li>
+            <li>Keverd meg a <b>Hírfolyam</b> 12 lapját, és fordíts fel hármat egy sorban az asztal közepén.</li>
+            <li>Keverd meg a 18 <b>Esemény</b>-lapot, és tedd le képpel lefelé.</li>
+            <li>Az kezd, aki legutóbb szavazott; ha ez nem dönthető el, sorsoljatok. A kezdő játékos az első körében nem húz lapot. Két játékosnál a második játékos <b>25 Támogatottsággal</b> kezd; ez ellensúlyozza a kezdés előnyét.</li>
+          </ol>
+        </div>
+
+        <div class="ch" id="r4">
+          <h3><small>§4</small>A lap felépítése</h3>
+          <div class="anatomy">
+            <div class="an-card" id="anatomy-card"></div>
+            <ol class="an-list">
+              <li><span><b>Név.</b> A ◆ KÖZSZEREPLŐ jelölés valós személyt mutat. Ez csak jelölés, nincs szabályhatása; minden ilyen lapból egy példány van.</span></li>
+              <li><span><b>Költség.</b> Szürke szám: tetszőleges erőforrás. Színes pip: pontosan az a fajta. A Bázisoknak nincs költsége.</span></li>
+              <li><span><b>Illusztráció</b> a frakció színében. A Hírfolyam-lapokon itt áll a <i>Független</i> vagy <i>Kormányközeli</i> címke (csak hangulat).</span></li>
+              <li><span><b>Típussor:</b> laptípus, szerep, párt. Az Összefogás a pártokat számolja.</span></li>
+              <li><span><b>Szabályszöveg.</b> A félkövér szavak kulcsszavak; a zárójeles dőlt szöveg röviden elmondja, mit jelentenek, így a lapot szabálykönyv nélkül is érted. A teljes lista: §11.</span></li>
+              <li><span><b>Hangulatszöveg</b> dőlttel. Nincs játékhatása.</span></li>
+              <li><span><b>Befolyás / Hitelesség.</b> A Befolyás az, amennyit a szereplő sebez; a Hitelesség az, amennyi sebzést egy körön belül kibír.</span></li>
+            </ol>
+          </div>
+          <h4>Laptípusok</h4>
+          <div class="types">
+            <div><b><span class="msym">foundation</span>Bázis</b>Erőforrás. Körönként egyet tehetsz játékba ingyen; ha már nem kell, <b>Cserével</b> új lapra válthatod.</div>
+            <div><b><span class="msym">person</span>Szereplő</b>Támad, feltart, képességeket használ.</div>
+            <div><b><span class="msym">account_balance</span>Intézmény</b>Tartós hatás, amely játékban marad.</div>
+            <div><b><span class="msym">play_arrow</span>Lépés</b>Egyszeri hatás, csak a saját körödben, amikor semmi más nincs folyamatban.</div>
+            <div><b><span class="msym">bolt</span>Reakció</b>Egyszeri hatás, bármikor kijátszható, az ellenfél körében is.</div>
+            <div><b><span class="msym">newspaper</span>Esemény</b>Közös szabálymódosító; fordulónként egy kerül fel (§10).</div>
+          </div>
+          <p>Az <b>Akció</b> gyűjtőnév a Lépésre és a Reakcióra. A <b>Süllyesztő</b> a saját dobópaklid: ide kerülnek a kijátszott Akciók és a kiesett szereplők.</p>
+        </div>
+
+        <div class="ch" id="r5">
+          <h3><small>§5</small>Erőforrások és költségek</h3>
+          <div class="res">
+            <div><span class="pip F">F</span><span><b>Forint</b>gazdaság, megrendelés</span></div>
+            <div><span class="pip M">M</span><span><b>Média</b>lapok, képernyők, posztok</span></div>
+            <div><span class="pip U">U</span><span><b>Utca</b>tüntetés, fórum, önkéntesek</span></div>
+            <div><span class="pip G">2</span><span><b>Tetszőleges</b>bármelyik a háromból</span></div>
+          </div>
+          <p><b>Csere.</b> Minden Bázison szerepel: fizess 1 tetszőleges erőforrást, dobd el a Bázist a kezedből, és húzz egy lapot. A játék elején a Bázisokat kijátszod, a végén a fölösleget így váltod új lapra.</p>
+          <p>Egy Bázis <b>kimerítésével</b> (<span class="pip T">↷</span>, vagyis a lap elfordításával) egy erőforrást kapsz. A <b>2</b><span class="pip F">F</span><span class="pip M">M</span> költség két tetszőleges erőforrást, egy Forintot és egy Médiát jelent. A fel nem használt erőforrás a köröd végén elvész.</p>
+          <p>A kimerített lap a következő körödig nem használható újra. A frissen játékba lépett szereplő <b>friss</b>: abban a körben nem támadhat, és <span class="pip T">↷</span> képességét sem használhatja, kivéve ha <span class="kw">Lendülete</span> van.</p>
+        </div>
+
+        <div class="ch" id="r6">
+          <h3><small>§6</small>A kör menete</h3>
+          <div class="phases ph4">
+            <div><h5>Ébredés</h5><p>Fordítsd vissza a lapjaidat, és hajtsd végre a „köröd elején” hatásokat. Ha te vagy a kezdő játékos, új forduló kezdődik: fordítsatok fel egy Eseményt (§10).</p></div>
+            <div><h5>Húzás</h5><p>Húzz egy lapot. Ha 6 vagy több Botrányod van, veszítesz 1 Támogatottságot.</p></div>
+            <div><h5>Akció</h5><p>Bármilyen sorrendben: 1 Bázis, bármennyi lap és képesség, 1 Toborzás, 1 Leleplezés és <b>legfeljebb egy Kampány</b>.</p></div>
+            <div><h5>Zárás</h5><p>Kör végi hatások. A sebzés és a „kör végéig” hatások megszűnnek. 7 lap fölött dobj le.</p></div>
+          </div>
+          <p><b>Reakció</b> bármikor kijátszható, akár egy másik lapra válaszul is. Ilyenkor az utoljára kijátszott lap hat először.</p>
+          <p>Ha üres pakliból kellene húznod, ehelyett 2 Támogatottságot veszítesz.</p>
+        </div>
+
+        <div class="ch" id="r7">
+          <h3><small>§7</small>Kampány: a harc</h3>
+          <ol>
+            <li><b>Támadók.</b> Válaszd ki a nem kimerült, nem friss szereplőidet, és merítsd ki őket. Több játékosnál minden támadóhoz megnevezed, kit támad.</li>
+            <li><b>Feltartás.</b> A megtámadott játékos nem kimerült szereplőivel feltarthat. Egy feltartó egy támadót tart fel; egy támadót többen is feltarthatnak. A <span class="kw">Propaganda</span> szereplőt csak legalább két szereplő tarthatja fel együtt.</li>
+            <li><b>Reakciók.</b> Mindenki kijátszhat Reakciókat, a támadóval kezdve.</li>
+            <li><b>Sebzés.</b> Minden harcoló szereplő egyszerre a Befolyásával egyenlő sebzést okoz. Akinek a sebzése eléri a Hitelességét, a Süllyesztőbe kerül. A feltartatlan támadó a megtámadott játékos Támogatottságát csökkenti. Ha egy támadót többen tartanak fel, a támadó osztja el köztük a sebzését.</li>
+          </ol>
+          <div class="example" id="example"></div>
+        </div>
+
+        <div class="ch" id="r8">
+          <h3><small>§8</small>Botrány és Leleplezés</h3>
+          <p>A <b>Botrány</b>-jelzők nálad gyűlnek, nem a lapokon. A <span class="kw">Botrány N</span> kulcsszavú lapok és egyes képességek adják őket. Két dolog fordítja őket ellened:</p>
+          <ul>
+            <li><b>Botrányküszöb.</b> A Húzás szakaszodban, ha 6 vagy több Botrányod van, veszítesz 1 Támogatottságot.</li>
+            <li><b>Leleplezés.</b> Ez mindenki alapakciója. Körönként egyszer fizess <span class="pip G">1</span><span class="pip M">M</span>-et, és válassz egy ellenfelet. Vegyél el tőle legfeljebb 2 Botrányt; minden elvett Botrány után 1 Támogatottságot veszít. A lapok saját Leleplezés-képességei ezen felül használhatók.</li>
+          </ul>
+          <p>Ha egy lap azt mondja, <i>távolíts el</i> Botrányt, a jelzők veszteség nélkül visszakerülnek a készletbe.</p>
+          <div class="note"><b>Miért működik?</b>A NER olcsón kap erős hatásokat (Mészáros két Forintot ad, Matolcsy bármilyen kettőt), de ezekért Botrányt kap. Az Összefogás a Leleplezésekből él, a Tisza Felháborodása a botrányokból nő, a Radikálisok Jakab Péterrel még tetézik is.</div>
+        </div>
+
+        <div class="ch" id="r9">
+          <h3><small>§9</small>Hírfolyam és Toborzás</h3>
+          <p>Az asztal közepén mindig három Hírfolyam-lap fekszik nyitva. <b>Körönként egyszer toborozhatsz</b>: fizesd ki egy lap költségét, és a lap azonnal hozzád kerül játékba (a szereplő friss). A sor azonnal kiegészül.</p>
+          <ul>
+                        <li>A játékból kikerülő Hírfolyam-lap a Hírfolyam-pakli aljára kerül, nem a te Süllyesztődbe.</li>
+          </ul>
+        </div>
+
+        <div class="ch" id="r10">
+          <h3><small>§10</small>Események</h3>
+          <p>Minden forduló elején, amikor a kezdő játékos köre jön, fordítsátok fel az Esemény-pakli felső lapját. Az előző Esemény a dobópaklira kerül. Ha egyszeri hatása van (például „minden játékos kap 2 Támogatottságot”), azonnal végrehajtjátok. Ha „ebben a fordulóban” szól, a következő Esemény felfordításáig tart.</p>
+          <p>Ugyanekkor dobjátok el a bal szélső Hírfolyam-lapot, és pótoljátok, így a piac sosem áll be. Ha az Esemény-pakli elfogy, keverjétek újra a dobópaklit.</p>
+          <p>Nincs idővonal és nincs számolnivaló: elég annyi, hogy a kezdő játékos minden köre elején húz egy Eseményt.</p>
+        </div>
+
+        <div class="ch" id="r11">
+          <h3><small>§11</small>Kulcsszavak és fogalmak</h3>
+          <div class="tscroll"><table class="kw-t">
+            <thead><tr><th>Kulcsszó</th><th>Frakció</th><th>Jelentés</th></tr></thead>
+            <tbody id="kw-body"></tbody>
+          </table></div>
+          <h4>Fogalmak</h4>
+          <ul>
+            <li><b>Kör / forduló:</b> lásd §1.</li>
+            <li><b>Áldozd fel:</b> a saját lapodat a Süllyesztődbe teszed.</li>
+            <li><b>Semlegesítsd:</b> az Akció hatás nélkül a Süllyesztőbe kerül.</li>
+            <li><b>Célzott:</b> kijátszáskor választod ki. Ha a célpont közben eltűnik, a hatás elmarad.</li>
+            <li><b>Szimpátia jelző:</b> +1/+1 a szereplőn. Ha a szereplő elhagyja a játékot, a jelző is elvész.</li>
+            <li><b>Jelzőlap</b> (Kerítés, Szakadár): szereplőnek számít, de ha elhagyja a játékot, visszakerül a dobozba.</li>
+            <li><b>Visszakerül a kezébe:</b> a lap a tulajdonosa kezébe kerül, a rajta lévő jelzők elvesznek. Hírfolyam-lap ilyenkor a Hírfolyam-pakli aljára kerül.</li>
+          </ul>
+        </div>
+
+        <div class="ch" id="r12">
+          <h3><small>§12</small>Többjátékos és változatok</h3>
+          <h4>3–4 játékos, mindenki mindenki ellen</h4>
+          <p>Mindenki 20 Támogatottsággal és 7 lappal kezd; a +5 Támogatottság csak két játékosnál jár. Támadáskor minden támadóhoz külön célpontot jelölsz, a Leleplezés bármely ellenfélre irányulhat. A kieső játékos lapjai elhagyják a játékot.</p>
+          <p><b>Szavazóátvétel:</b> aki a saját körében kiüt egy ellenfelet, 5 Támogatottságot kap.</p>
+          <h4>Gyors játék</h4>
+          <p>Mindenki 15 Támogatottsággal kezd. Kb. 30 perc.</p>
+          <h4>Kísérleti változatok</h4>
+          <p><b>Koalíció (2 a 2 ellen):</b> a csapatoknak közös, 30 pontos Támogatottságuk és közös Botrány-készletük van; a társ szereplőivel is feltarthatsz. <b>Vegyes pakli:</b> két frakcióból 9–9 nem-Bázis lap és 6–6 Bázis. Ezeket a változatokat még nem szimuláltuk.</p>
+        </div>
+
+        <div class="ch" id="r13">
+          <h3><small>§13</small>Stratégiai tippek</h3>
+          <div class="tips">
+            <div style="--fc:var(--ner)"><h5>NER</h5><ul><li>Mészáros a második körben, és a negyedik körre ott lehet Orbán.</li><li>Gulyás és a Bűnbak a szelepek. Ne lépd át a 6-os Botrányküszöböt.</li><li>Simicskát csak alacsony Botránynál érdemes kijátszani, különben átáll.</li></ul></div>
+            <div style="--fc:var(--osz)"><h5>Összefogás</h5><ul><li>Számold a pártokat: a DK, a Momentum és egy Független már elég.</li><li>Hadházy minden körben lelepez egy kicsit; a Hangfelvételt tartsd a nagy fogásra.</li><li>Karácsony egyszer megmenti a játékot. Ne áldozd fel olcsón.</li></ul></div>
+            <div style="--fc:var(--tis)"><h5>Tisza</h5><ul><li>Magyar Péter korán, minél több Bázissal utána. Három jelzőnél megállíthatatlan.</li><li>A Szavazatszámláló delegáltak a NER ellen kulcslap.</li><li>Az Országjárás minden szereplőt nagyobbá tesz: a széles csatasor fizet.</li></ul></div>
+            <div style="--fc:var(--rad)"><h5>Radikálisok</h5><ul><li>Az első öt kör a tiéd: aktivisták, Sneider, Utcai demonstráció.</li><li>Jakab Péter Botrányt ad a Leleplezésekhez, akár másnak is.</li><li>A Határzár elvágja az ellenfél Támogatottság-forrásait és botránykezelését: a NER ellen ez a fegyvered.</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lapok">
+    <div class="sec-head"><h2>A teljes készlet</h2><p>113 különböző lap, összesen 162 példány. A ×N jelzés a pakliban lévő példányszámot mutatja.</p></div>
+    <div class="filters" role="group" aria-label="Szűrés">
+      <button type="button" data-f="ALL" aria-pressed="true">Mind <span id="c-ALL"></span></button>
+      <button type="button" data-f="NER" style="--fc:var(--ner)"><i></i>NER <span id="c-NER"></span></button>
+      <button type="button" data-f="OSZ" style="--fc:var(--osz)"><i></i>Összefogás <span id="c-OSZ"></span></button>
+      <button type="button" data-f="TIS" style="--fc:var(--tis)"><i></i>Tisza <span id="c-TIS"></span></button>
+      <button type="button" data-f="RAD" style="--fc:var(--rad)"><i></i>Radikálisok <span id="c-RAD"></span></button>
+      <button type="button" data-f="SAJ" style="--fc:var(--saj)"><i></i>Hírfolyam <span id="c-SAJ"></span></button>
+      <button type="button" data-f="KOR" style="--fc:var(--kor)"><i></i>Események <span id="c-KOR"></span></button>
+      <button type="button" data-f="JEL" style="--fc:var(--jel)"><i></i>Jelzők <span id="c-JEL"></span></button>
+      <input id="q" type="search" placeholder="Keresés név vagy szöveg alapján" aria-label="Keresés">
+    </div>
+    <p class="gcount" id="gcount"></p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="teszt">
+    <div class="sec-head"><h2>Tesztelés</h2><p>Szimulált játszmák alapján hangolt számok</p></div>
+    <div class="t-intro">
+      <p>A teljes szabályrendszert és mind a 113 lapot leprogramoztuk, és gépi játékosokat ültettünk le egymással szemben. Az 5. kiadás szabályait (nincs körlimit, véletlen Események, Magic-szerű kezdés mulligannal, Csere a Bázisokon) újra végigteszteltük. Összesen több mint 300 000 játszma után az első kiadáshoz képest 53 lap változott, 4 kikerült. Az alábbi eredmények a végleges lapkészlettel készültek.</p>
+    </div>
+    <div class="t-stats" id="t-stats"></div>
+    <div class="t-grid">
+      <div class="t-mat">
+        <h4>Párharcok, 2 játékos</h4>
+        <p class="t-cap">A sor frakciójának győzelmi aránya az oszlop frakciója ellen, oldalanként 2000 játszma alapján.</p>
+        <div class="tscroll"><table class="mat" id="t-mat"></table></div>
+      </div>
+      <div class="t-mp">
+        <h4>Négy játékos</h4>
+        <p class="t-cap">Győzelmi arány mindenki mindenki ellen, 1920 játszma (várt érték: 25%).</p>
+        <div id="t-mp"></div>
+      </div>
+    </div>
+    <div class="note"><b>Korlátok</b>A gépi játékos szabályalapú, nem tanul, ezért a Reakciók időzítését és a ritka kombinációkat egyszerűbben kezeli, mint egy tapasztalt játékos. Négy játékosnál az Összefogás erősebb (kb. 31%), mert a széles csatasor jól bírja a több irányból érkező támadást. Valódi asztali tesztek ezt még finomíthatják.</div>
+    <h4 class="t-h">Mi változott az első kiadáshoz képest</h4>
+    <p class="t-cap">Szabályok: nincs körlimit és Választás; a Korszak-idővonal helyett véletlen Események; Magic-szerű kezdés (7 lap, mulligan); paklinként 13 Bázis, mindegyiken Csere (a Magic „cycling”-je); a Rokonság-kedvezmény megszűnt; egyetlen Akció szakasz; két játékosnál a második 25 Támogatottsággal kezd; kikerült négy lap (Nemzeti konzultáció, Rabszolgatörvény-tüntetés, Rendszerváltó hangulat, Mozgalmi tábor); „kör” és „forduló” szétválasztva; a Legendás jelölésből szabály nélküli ◆ Közszereplő lett. Lapok:</p>
+    <div class="changes" id="t-changes"></div>
+  </section>
+
+  <section id="gyors">
+    <div class="sec-head"><h2>Gyorsreferencia</h2><p>Nyomtasd ki, és tedd a paklid mellé.</p></div>
+    <div class="qref">
+      <div><h4>A köröd</h4><ol><li><b>Ébredés:</b> visszafordítás, „köröd elején” hatások; a kezdő játékos Eseményt fordít</li><li><b>Húzás:</b> 1 lap; 6+ Botrány esetén −1</li><li><b>Akció:</b> 1 Bázis · lapok · 1 Toborzás · 1 Leleplezés · legfeljebb 1 Kampány</li><li><b>Zárás:</b> kör végi hatások, sebzés törlése, kézlimit 7</li></ol></div>
+      <div><h4>Alapakciók</h4><ul><li><b>Leleplezés</b> (1 + <span class="pip M">M</span>): legfeljebb 2 Botrányt veszel el, mindegyik −1 Támogatottság</li><li><b>Toborzás:</b> körönként egy lap a Hírfolyamból, a költségéért</li><li><b>Csere</b> (minden Bázison): 1 erőforrás, dobd el a kézből, húzz egy lapot</li><li><b>Kezdés:</b> 7 lap, mulligan: újrahúzás, majd annyi lap alulra, ahányszor húztál; 2 játékosnál a második 25 Támogatottsággal</li><li><b>Üres pakli:</b> húzás helyett −2 Támogatottság</li></ul></div>
+      <div><h4>Győzelem</h4><ul><li>Az utolsó talpon maradt játékos nyer</li><li>Egyszerre kiesésnél az nyer, akinek a köre van</li><li>Többjátékosnál: kiütésért +5 Támogatottság</li></ul></div>
+    </div>
+  </section>
+
+  <footer class="end">
+    <p><b>Kétharmad</b> · nem gyűjtögetős stratégiai kártyajáték · 5. kiadás, 2026.</p>
+    <p>Szatirikus játék. A lapokon szereplő személyek nyilvános közéleti szerepükben jelennek meg. Az idézőjeles mondatok nyilvánosan elhangzottak, a dátumok és tisztségek nyilvános forrásokon alapulnak. A játékmechanika a közéleti szerepre utal, és nem állít semmit a szereplők jelleméről.</p>
+  </footer>
+</main>
+
+<script src="game/art-v2.js"></script>
+<script>
+const CARDS = [{"f": "NER", "n": "Állami megrendelés", "t": "Bázis", "s": "Forint", "c": "", "x": "{T}: {F}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Egy pályázó, egy nyertes. Hatékony.", "i": "request_quote", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Megyei lapok", "t": "Bázis", "s": "Média", "c": "", "x": "{T}: {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Tizenkilenc megye, egy címlap. Takarékos.", "i": "newspaper", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Uniós forrás", "t": "Bázis", "s": "Forint / Média", "c": "", "x": "Kimerítve lép játékba.\n{T}: {F} vagy {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Brüsszel rossz. A pénze jó.", "i": "euro", "k": 2, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Békemenet", "t": "Bázis", "s": "Utca", "c": "", "x": "Amikor játékba lép, kapsz 1 Támogatottságot.\n{T}: {U} vagy {F}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Ingyen busz, zsíros kenyér, spontán lelkesedés.", "i": "directions_bus", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Orbán Viktor", "t": "Szereplő", "s": "Politikus · Fidesz", "c": "2FM", "x": "**Mentelmi jog**\n**Kétharmad** — Amíg legalább két Intézményed van, minden más szereplőd +1/+1-et kap.", "q": "„A haza nem lehet ellenzékben.” — 2002", "i": "account_balance", "k": 1, "p": 4, "h": 5, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Mészáros Lőrinc", "t": "Szereplő", "s": "Oligarcha · Felcsút", "c": "1F", "x": "{T}: {F}{F}. Valahányszor ezt a képességet használod, kapsz 1 Botrányt.", "q": "„…szerepet játszik a Jóisten, a szerencse és Orbán Viktor személye.” — 2014", "i": "plumbing", "k": 1, "p": 1, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Tiborcz István", "t": "Szereplő", "s": "Oligarcha", "c": "1F", "x": "**Botrány 1**\nAmikor játékba lép, húzz egy lapot. Ha Orbán Viktor játékban van nálad, húzz kettőt helyette.", "q": "Fényes karrier. Szó szerint: közvilágítás.", "i": "lightbulb", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Gulyás Gergely", "t": "Szereplő", "s": "Politikus · Fidesz", "c": "1M", "x": "**Kormányinfó** — Amikor játékba lép, távolíts el legfeljebb 3 Botrányt magadról.", "q": "Csütörtökönként mindenre válaszol. Arra is, amit nem kérdeztek.", "i": "mic", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Kubatov Gábor", "t": "Szereplő", "s": "Pártigazgató · Fidesz", "c": "1F", "x": "Amikor játékba lép, nézd meg egy ellenfeled kezét. Választhatsz belőle egy Akciót: azt eldobja.", "q": "Tudja, ki hová szavaz. Rólad is.", "i": "list_alt", "k": 1, "p": 2, "h": 1, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Rogán Antal", "t": "Szereplő", "s": "Politikus · Fidesz", "c": "2M", "x": "**Propaganda**\n{T}, fizess {M}-et: egy célzott szereplő −2/−0-t kap a kör végéig.", "q": "Esküvőre helikopterrel. Minek dugóba ülni?", "i": "campaign", "k": 1, "p": 3, "h": 4, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Szijjártó Péter", "t": "Szereplő", "s": "Politikus · Fidesz", "c": "2F", "x": "**Keleti nyitás** — {T}: nézd meg a paklid felső 3 lapját. Egyet vegyél kézbe, a többit tedd alulra. Kapsz 1 Botrányt.", "q": "Reggel Moszkva, délben Peking, este új videó a repülőről.", "i": "public", "k": 1, "p": 3, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Kövér László", "t": "Szereplő", "s": "Politikus · Fidesz · Házelnök", "c": "2M", "x": "**Házszabály** — Ellenfeleid körönként legfeljebb egy Reakciót játszhatnak ki.", "q": "A csengő az övé. A szó is.", "i": "gavel", "k": 1, "p": 2, "h": 5, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Matolcsy György", "t": "Szereplő", "s": "Jegybankár", "c": "2F", "x": "{T}: adj hozzá két tetszőleges erőforrást. Kapsz 1 Botrányt.", "q": "Unortodox közgazdaságtan: kettő meg kettő néha alapítvány.", "i": "savings", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Simicska Lajos", "t": "Szereplő", "s": "Oligarcha", "c": "2F", "x": "**G-nap** — Köröd elején, ha 5 vagy több Botrányod van, Simicska Lajos irányítását a legkevesebb Botránnyal rendelkező ellenfeled veszi át.", "q": "„O. V. egy g…” — 2015, a G-nap", "i": "bolt", "k": 1, "p": 4, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Novák Katalin", "t": "Szereplő", "s": "Politikus · Fidesz · Államfő", "c": "2M", "x": "**Mentelmi jog**\n**Kegyelem** — {T}: egy szereplőd a Süllyesztődből visszakerül a kezedbe. Kapsz 2 Botrányt.", "q": "„Hibáztam.” — 2024", "i": "balance", "k": 1, "p": 2, "h": 4, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Lázár János", "t": "Szereplő", "s": "Politikus · Fidesz", "c": "2FM", "x": "**Lendület**\nAmikor játékba lép, egy célzott ellenfeled eldob egy általa választott lapot.", "q": "„Akinek nincs semmije, az annyit is ér.” — 2008", "i": "construction", "k": 1, "p": 4, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "KESMA", "t": "Intézmény", "s": "Médiaalapítvány", "c": "1FM", "x": "**Botrány 1**\nMédia-Bázisaid {M}{M}-et adnak {M} helyett.", "q": "Ötszáz újság, egy vélemény. Hatékony.", "i": "hub", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Közmédia", "t": "Intézmény", "s": "Közszolgálat", "c": "2M", "x": "Köröd elején minden ellenfeled veszít 1 Támogatottságot.", "q": "Az időjárás-jelentés is kormányinfó.", "i": "live_tv", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Rezsicsökkentés", "t": "Lépés", "s": "Gazdaságpolitika", "c": "1F", "x": "Kapsz 5 Támogatottságot.", "q": "Kisebb számla, nagyobb levél mellé.", "i": "local_fire_department", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Plakátkampány", "t": "Lépés", "s": "Kommunikáció", "c": "3F", "x": "Ellenfeleid összes szereplője −1/−1-et kap a kör végéig.", "q": "Minden körforgalomban ugyanaz az arc néz vissza.", "i": "signpost", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Alaptörvény-módosítás", "t": "Reakció", "s": "Jogalkotás", "c": "2M", "x": "Semlegesíts egy Akciót. Kapsz 1 Botrányt.", "q": "Gránitszilárd. Ceruzával írva.", "i": "edit_document", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "NER", "n": "Bűnbak", "t": "Reakció", "s": "Kármentés", "c": "1", "x": "Áldozz fel egy szereplődet. Távolíts el 3 Botrányt magadról, és húzz két lapot.", "q": "Valakinek mindig le kell mondania. Ritkán annak, akire gondolsz.", "i": "person_remove", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Független sajtó", "t": "Bázis", "s": "Média", "c": "", "x": "{T}: {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Előfizetőkből, adományból és dacból.", "i": "article", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Utcai tüntetés", "t": "Bázis", "s": "Utca", "c": "", "x": "{T}: {U}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Kossuth tér, Erzsébet híd, megint Kossuth tér.", "i": "groups", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Ellenzéki önkormányzat", "t": "Bázis", "s": "Forint", "c": "", "x": "{T}: {F}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "A kassza üres, de legalább a miénk.", "i": "location_city", "k": 2, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Közös jelölt körzete", "t": "Bázis", "s": "Utca", "c": "", "x": "{T}: {U}.\n{T}: tetszőleges erőforrás — csak ha legalább 3 különböző pártú szereplőd van.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Egy körzet, egy jelölt. Hat párt, hat vélemény.", "i": "how_to_vote", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Gyurcsány Ferenc", "t": "Szereplő", "s": "Politikus · DK", "c": "2MU", "x": "**Botrány 2**\n**Megosztó** — Amikor játékba lép, minden ellenfeled húz egy lapot.", "q": "„Elkúrtuk. Nem kicsit, nagyon.” — Őszöd, 2006", "i": "record_voice_over", "k": 1, "p": 4, "h": 4, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Dobrev Klára", "t": "Szereplő", "s": "Politikus · DK", "c": "2M", "x": "**Árnyékkormány** — {T}: minden más szereplőd +1/+0-t kap a kör végéig.", "q": "Árnyékkormányt vezetett. Az árnyék megmaradt.", "i": "contrast", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Karácsony Gergely", "t": "Szereplő", "s": "Politikus · Párbeszéd · Főpolgármester", "c": "2U", "x": "Köröd elején adj hozzá {F}-et.\n**41 szavazat** — Ha egy sebzés 0-ra csökkentené a Támogatottságodat, helyette 1 marad, és Karácsony Gergely a Süllyesztőbe kerül.", "q": "Ma már ötödször mentette meg a fővárost a csődtől. Még csak dél van.", "i": "pedal_bike", "k": 1, "p": 1, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Márki-Zay Péter", "t": "Szereplő", "s": "Politikus · Független", "c": "2MU", "x": "**Közös jelölt** — Amíg legalább 3 különböző pártú szereplőd van, +2/+2-t kap.\n**Rögtönzés** — Amikor támad, dobj kockával. 1–2: veszítesz 1 Támogatottságot. 5–6: húzz egy lapot.", "q": "Mindig mond valamit. Néha valami mást is.", "i": "casino", "k": 1, "p": 3, "h": 4, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Fekete-Győr András", "t": "Szereplő", "s": "Politikus · Momentum", "c": "2U", "x": "**NOlimpia** — Amikor játékba lép, a Süllyesztőbe küldhetsz egy célzott, legfeljebb 4 költségű Intézményt.", "q": "Elvitte az olimpiát. Cserébe hozott egy pártot.", "i": "block", "k": 1, "p": 3, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Hadházy Ákos", "t": "Szereplő", "s": "Politikus · Független", "c": "2M", "x": "**Oknyomozó**\n{T}: **Leleplezés** — vegyél el 1 Botrányt egy ellenfeledtől; az veszít 1 Támogatottságot.", "q": "Síp, kamera, kilátó a semmi közepén.", "i": "travel_explore", "k": 1, "p": 1, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Schiffer András", "t": "Szereplő", "s": "Politikus · LMP", "c": "1M", "x": "**Önálló út** — Nem számít bele az Összefogásba. Amíg nincs más szereplőd, +1/+1-et kap, és **Mentelmi joga** van.", "q": "Lehet Más a Politika. Lett is.", "i": "eco", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Botka László", "t": "Szereplő", "s": "Politikus · MSZP", "c": "2U", "x": "**Visszalépés** — {T}, áldozd fel: keress a paklidban egy legfeljebb 4 költségű szereplőt, tedd játékba, majd keverd meg a paklit.", "q": "Szegedről nézve minden visszalépés előrelépés.", "i": "undo", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Donáth Anna", "t": "Szereplő", "s": "Politikus · Momentum", "c": "1M", "x": "**Brüsszel** — Amikor játékba lép, egy célzott Intézmény visszakerül a tulajdonosa kezébe.", "q": "Brüsszelben mindenki ismeri. Itthon is, Brüsszelből.", "i": "flag", "k": 1, "p": 1, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Bajnai Gordon", "t": "Szereplő", "s": "Politikus · Együtt", "c": "2F", "x": "**Válságkezelő** — Amikor játékba lép, keress a paklidban egy Bázist, és vedd kézbe. Kapsz 2 Támogatottságot.", "q": "Jött, kezelt, elment. Szakértőileg.", "i": "work", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Előválasztási önkéntes", "t": "Szereplő", "s": "Aktivista · Független", "c": "U", "x": "Amikor játékba lép, nézd meg a paklid felső lapját; alulra teheted.", "q": "Hatszázezren szavaztak. Ő mindet megszámolta.", "i": "volunteer_activism", "k": 2, "p": 1, "h": 2, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Előválasztás", "t": "Lépés", "s": "Kampány", "c": "1U", "x": "Nézd meg a paklid felső 5 lapját. Egy szereplőt vegyél kézbe, a többit tedd alulra. Kapsz 1 Támogatottságot.", "q": "Öt jelölt, két forduló, egy győztes. Kormány: nulla.", "i": "ballot", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Kiszivárgott hangfelvétel", "t": "Reakció", "s": "Leleplezés", "c": "1M", "x": "**Leleplezés** — vegyél el legfeljebb 2 Botrányt egy ellenfeledtől; annyi Támogatottságot veszít.", "q": "Őszöd óta tudjuk: a mikrofon mindig be van kapcsolva.", "i": "graphic_eq", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Bizalmatlansági indítvány", "t": "Lépés", "s": "Parlament", "c": "2M", "x": "Küldj a Süllyesztőbe egy célzott, legfeljebb 4 Hitelességű szereplőt.", "q": "Bizalmatlanság: végre valami, amiben mindenki egyetért.", "i": "thumb_down", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Közös lista", "t": "Intézmény", "s": "Választási szövetség", "c": "2MU", "x": "**Összefogás** — Amíg legalább 3 különböző pártú szereplőd van, minden szereplőd +1/+1-et kap.\n**Széthúzás** — Valahányszor egy szereplőd a Süllyesztőbe kerül, kapsz 1 Botrányt.", "q": "Egységben az erő. Papíron mindenképp.", "i": "join_inner", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Fővárosi Közgyűlés", "t": "Intézmény", "s": "Önkormányzat", "c": "2F", "x": "Köröd elején kapsz 1 Támogatottságot. Valahányszor egy ellenfeled Intézményt játszik ki, húzz egy lapot.", "q": "Mindenki főpolgármester akar lenni. Egyszerre.", "i": "apartment", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "OSZ", "n": "Visszalépés a közös jelölt javára", "t": "Reakció", "s": "Koordináció", "c": "U", "x": "Áldozz fel egy szereplődet: egy másik célzott szereplőd kap két Szimpátia jelzőt.", "q": "Egyéni körzetben csak egy maradhat.", "i": "call_merge", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Tisza-sziget", "t": "Bázis", "s": "Utca", "c": "", "x": "{T}: {U}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Tisztelet és szabadság. Meg pogácsa.", "i": "diversity_3", "k": 6, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Közösségi média", "t": "Bázis", "s": "Média", "c": "", "x": "{T}: {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Élő videó. Ma már a harmadik.", "i": "smartphone", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Vidéki fórum", "t": "Bázis", "s": "Utca / Média", "c": "", "x": "Kimerítve lép játékba. Amikor játékba lép, egy szereplőd kap egy Szimpátia jelzőt.\n{T}: {U} vagy {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Száz szék, kétszáz ember, egy hangosítás.", "i": "forum", "k": 2, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Magyar Péter", "t": "Szereplő", "s": "Politikus · Tisza", "c": "2U", "x": "**Disszidens** · **Mozgalom**\nAmíg legalább 3 Szimpátia jelző van rajta, **Propagandája** és **Lendülete** van.", "q": "Ha egy órája nem posztolt, akkor épp élőben van.", "i": "waves", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Tarr Zoltán", "t": "Szereplő", "s": "Politikus · Tisza", "c": "1M", "x": "Amikor játékba lép, egy másik szereplőd kap egy Szimpátia jelzőt.", "q": "Mindig ott áll a kamera szélén. Pontosan fél lépéssel hátrébb.", "i": "theater_comedy", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Kapitány István", "t": "Szereplő", "s": "Szakértő · Tisza", "c": "2M", "x": "{T}: {F} vagy {M}.", "q": "Olajos múlt, tiszta lap.", "i": "oil_barrel", "k": 1, "p": 1, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Orbán Anita", "t": "Szereplő", "s": "Diplomata · Tisza", "c": "2M", "x": "**Disszidens**\nAmikor játékba lép, nézd meg egy ellenfeled kezét, és húzz egy lapot.", "q": "Orbán a külügyben. Csak más keresztnévvel.", "i": "language", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Vitézy Dávid", "t": "Szereplő", "s": "Szakértő · Tisza", "c": "2U", "x": "**Disszidens**\n**Újrakezdés** — Amikor a Süllyesztőbe kerül, húzz két lapot.", "q": "Késés nélkül érkezett a minisztériumba. A MÁV-nál ez rekord.", "i": "tram", "k": 1, "p": 3, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Ruszin-Szendi Romulusz", "t": "Szereplő", "s": "Katona · Tisza", "c": "3U", "x": "**Disszidens**\nAmíg nem támad, +0/+2-t kap.", "q": "Leváltották. Visszajött. Miniszterként.", "i": "military_tech", "k": 1, "p": 3, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Ruff Bálint", "t": "Szereplő", "s": "Stratéga · Tisza", "c": "1M", "x": "{T}: egy célzott szereplőd **Propagandát** kap a kör végéig.", "q": "Tudja, mit mondasz, mielőtt kimondod.", "i": "psychology", "k": 1, "p": 1, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Lannert Judit", "t": "Szereplő", "s": "Szakértő · Tisza", "c": "1U", "x": "Amikor játékba lép, húzz egy lapot.", "q": "Házi feladat: a teljes oktatási rendszer.", "i": "menu_book", "k": 1, "p": 1, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Hegedűs Zsolt", "t": "Szereplő", "s": "Szakértő · Tisza", "c": "1U", "x": "{T}: kapsz 1 Támogatottságot.", "q": "Orvos. A politikára is ír receptet.", "i": "medical_services", "k": 1, "p": 0, "h": 4, "L": true, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Tisza-szigetes önkéntes", "t": "Szereplő", "s": "Aktivista · Tisza", "c": "1U", "x": "**Mozgalom**", "q": "Kopog. Ha nem nyitnak ki, holnap újra kopog.", "i": "door_front", "k": 2, "p": 1, "h": 1, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Kiábrándult szavazó", "t": "Szereplő", "s": "Szavazó", "c": "1U", "x": "**Disszidens**\nAmikor játékba lép, ha ellenfeleidnek összesen legalább 3 Botránya van, kap két Szimpátia jelzőt.", "q": "„Eddig rájuk szavaztam.”", "i": "sentiment_dissatisfied", "k": 1, "p": 2, "h": 2, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Az interjú", "t": "Lépés", "s": "Média", "c": "1M", "x": "Húzz két lapot. Ha ellenfeleidnek összesen legalább 3 Botránya van, húzz hármat helyette.", "q": "Másfél óra kamera előtt. Utána semmi sem ugyanaz.", "i": "videocam", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Országjárás", "t": "Lépés", "s": "Kampány", "c": "2U", "x": "Minden szereplőd kap egy Szimpátia jelzőt.", "q": "Minden faluba. Gyalog, ha kell. És kell.", "i": "directions_walk", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Felháborodás", "t": "Reakció", "s": "Közhangulat", "c": "1U", "x": "Egy célzott szereplő +X/+X-et kap a kör végéig, ahol X az ellenfeleid Botrányainak száma (legfeljebb 4).", "q": "Van, ami már sok.", "i": "whatshot", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Nagygyűlés", "t": "Lépés", "s": "Utca", "c": "3U", "x": "Szereplőid +2/+0-t és **Propagandát** kapnak a kör végéig.", "q": "Március 15., október 23. A drón is alig fér el.", "i": "groups_3", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Szavazatszámláló delegáltak", "t": "Intézmény", "s": "Választási részvétel", "c": "1M", "x": "Ellenfeleid nem távolíthatnak el Botrányt magukról.", "q": "Minden szavazókörben kettő. A biztonság kedvéért.", "i": "fact_check", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "TIS", "n": "Mozgósítás", "t": "Reakció", "s": "Kampány", "c": "1U", "x": "Egy célzott szereplőd kap két Szimpátia jelzőt.", "q": "Egy poszt, és este hatra ott vannak.", "i": "notifications_active", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Falugyűlés", "t": "Bázis", "s": "Utca", "c": "", "x": "{T}: {U}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Vidéken kezdődik minden. A pálinka is.", "i": "cottage", "k": 6, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Alternatív média", "t": "Bázis", "s": "Média", "c": "", "x": "{T}: {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Saját portál, saját igazság.", "i": "podcasts", "k": 5, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Mozgalmi pénztár", "t": "Bázis", "s": "Forint", "c": "", "x": "{T}: {F}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot.", "q": "Tagdíj és adomány. Állami megrendelés nincs.", "i": "payments", "k": 2, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Vona Gábor", "t": "Szereplő", "s": "Politikus · Jobbik", "c": "2UM", "x": "**Néppártosodás** — Amikor játékba lép, válassz: **Radikális** és **Lendület**; vagy +0/+2, és köröd végén kapsz 1 Támogatottságot.", "q": "A párt középre húzódott. A tagság egy része nem.", "i": "flip", "k": 1, "p": 3, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Toroczkai László", "t": "Szereplő", "s": "Politikus · Mi Hazánk", "c": "2U", "x": "Amikor játékba lép, hozz létre egy 0/3-as **Kerítés** jelzőt.\n**Szakadás**", "q": "Ásotthalomról üzen. Videóban, határozottan.", "i": "fence", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Jakab Péter", "t": "Szereplő", "s": "Politikus · Jobbik", "c": "1U", "x": "Amikor játékba lép, egy célzott ellenfeled kap 3 Botrányt.", "q": "Egy zsák krumpli a parlament padlóján. A krumpli bírta a legtovább.", "i": "shopping_bag", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Dúró Dóra", "t": "Szereplő", "s": "Politikus · Mi Hazánk", "c": "1M", "x": "**Lendület** · **Botrány 1**\nAmikor játékba lép, egy célzott ellenfeled eldob egy általa választott lapot.", "q": "A mesekönyv nem élte túl a sajtótájékoztatót.", "i": "content_cut", "k": 1, "p": 2, "h": 1, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Volner János", "t": "Szereplő", "s": "Politikus", "c": "1U", "x": "**Szakadás**", "q": "Jobbik, Mi Hazánk, Volner Párt. Ebben a sorrendben.", "i": "call_split", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Sneider Tamás", "t": "Szereplő", "s": "Politikus · Jobbik", "c": "2U", "x": "**Radikális** · **Lendület**", "q": "Gyorsan jött, gyorsan ment. Lendülettel.", "i": "speed", "k": 1, "p": 2, "h": 2, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Gyöngyösi Márton", "t": "Szereplő", "s": "Politikus · Jobbik", "c": "2M", "x": "Amikor játékba lép, nézd meg a paklid felső 3 lapját. Egyet vegyél kézbe, a többit tedd alulra.", "q": "Brüsszelben is elmondja. Angolul is.", "i": "travel", "k": 1, "p": 2, "h": 3, "L": true, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Nemzeti radikális aktivista", "t": "Szereplő", "s": "Aktivista", "c": "U", "x": "**Radikális**", "q": "Molinó, megafon, zászló. Meg egy tartalék molinó.", "i": "sports", "k": 2, "p": 1, "h": 2, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Határvadász", "t": "Szereplő", "s": "Rendvédelem", "c": "1U", "x": "**Kerítés**\n{T}: egy célzott támadó szereplő −1/−0-t kap a kör végéig.", "q": "A határ az határ.", "i": "shield", "k": 2, "p": 2, "h": 4, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Vidéki polgármester", "t": "Szereplő", "s": "Politikus", "c": "2F", "x": "Amikor játékba lép, kapsz 2 Támogatottságot.", "q": "Ő ismer mindenkit, és mindenki ismeri őt.", "i": "home_work", "k": 1, "p": 2, "h": 3, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Utcai demonstráció", "t": "Lépés", "s": "Utca", "c": "1U", "x": "3 sebzés egy célzott szereplőnek, vagy 2 sebzés egy célzott ellenfélnek.", "q": "Fáklyák, dobok, kemény szavak.", "i": "local_fire_department", "k": 2, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Pártszakadás", "t": "Lépés", "s": "Pártélet", "c": "2U", "x": "Hozz létre két 1/1-es **Szakadár** jelzőt **Lendülettel**.", "q": "Aki maradt, néppárt lett. Aki ment, új pártot alapított.", "i": "fork_right", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Határzár", "t": "Intézmény", "s": "Határvédelem", "c": "3F", "x": "Ellenfeleid nem kaphatnak Támogatottságot, és nem távolíthatnak el Botrányt magukról.", "q": "Kerítés kívül, kerítés belül.", "i": "fence", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Néppárti fordulat", "t": "Reakció", "s": "Arculatváltás", "c": "1M", "x": "Egy célzott szereplő +0/+3-at kap a kör végéig. Ha a tiéd, kapsz 2 Támogatottságot, és húzol egy lapot.", "q": "Cukiságkampány: most kiskutyával.", "i": "favorite", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "RAD", "n": "Obstrukció", "t": "Reakció", "s": "Parlament", "c": "1M", "x": "Semlegesíts egy legfeljebb 3 költségű Lépést.", "q": "Sziréna, síp, molinó a patkóban.", "i": "do_not_disturb_on", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": null, "pile": null}, {"f": "SAJ", "n": "Telex", "t": "Intézmény", "s": "Sajtó", "c": "1M", "x": "Köröd elején nézd meg a paklid felső lapját; alulra teheted.\nA Leleplezés alapakció neked 1-gyel olcsóbb.", "q": "Egy szerkesztőség felállt, és azóta sem ült le.", "i": "rss_feed", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "444", "t": "Intézmény", "s": "Sajtó", "c": "1M", "x": "Körönként egyszer: amikor egy ellenfeled Botrányt kap, kapsz 1 Támogatottságot.", "q": "Ironikus hangvétel, komoly ügyek. Ez most ironikus volt?", "i": "sentiment_very_satisfied", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "Partizán", "t": "Intézmény", "s": "Sajtó", "c": "3M", "x": "Amikor játékba lép, húzz két lapot.", "q": "Itt kezdődött egy új párt. A stúdió azóta is büszke.", "i": "smart_display", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "Pethő András", "t": "Szereplő", "s": "Újságíró · Direkt36", "c": "1MM", "x": "**Oknyomozó**\nAmikor játékba lép: **Leleplezés** — vegyél el legfeljebb 2 Botrányt egy ellenfeledtől; annyi Támogatottságot veszít.", "q": "Fél év oknyomozás, egy cikk, három cáfolat.", "i": "search", "k": 1, "p": 1, "h": 2, "L": true, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "Átlátszó", "t": "Intézmény", "s": "Sajtó", "c": "1M", "x": "Amikor játékba lép, minden ellenfeled kap 1 Botrányt.\nEllenfeleid Botrányküszöbe 6 helyett 4.", "q": "Közérdekű adat. Három per után.", "i": "visibility", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "HVG", "t": "Intézmény", "s": "Sajtó", "c": "1M", "x": "{T}: **Leleplezés** — vegyél el 1 Botrányt egy ellenfeledtől; az veszít 1 Támogatottságot.", "q": "Hetente egy címlap, amin mindenki felhördül.", "i": "auto_stories", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "Index", "t": "Intézmény", "s": "Sajtó", "c": "2M", "x": "Amikor játékba lép, húzz egy lapot.\nAkcióid 1-gyel olcsóbbak (a tetszőleges részből).", "q": "Egyszer fel kellett állni.", "i": "sync_alt", "k": 1, "p": null, "h": null, "L": false, "tag": "Független", "year": null, "pile": null}, {"f": "SAJ", "n": "Hír TV", "t": "Intézmény", "s": "Sajtó", "c": "1M", "x": "{T}: {M}.", "q": "Mindig az igazat mondja. Mindig a tulajdonosét.", "i": "tv", "k": 1, "p": null, "h": null, "L": false, "tag": "Kormányközeli", "year": null, "pile": null}, {"f": "SAJ", "n": "TV2", "t": "Intézmény", "s": "Sajtó", "c": "2M", "x": "{T}: {M}{M}. Valahányszor használod, kapsz 1 Botrányt.", "q": "Tények. Többnyire.", "i": "connected_tv", "k": 1, "p": null, "h": null, "L": false, "tag": "Kormányközeli", "year": null, "pile": null}, {"f": "SAJ", "n": "Megafon", "t": "Intézmény", "s": "Sajtó", "c": "2M", "x": "{T}, fizess {M}-et: minden ellenfeled veszít 1 Támogatottságot.", "q": "Influenszer vagy, ha fizetnek érte.", "i": "volume_up", "k": 1, "p": null, "h": null, "L": false, "tag": "Kormányközeli", "year": null, "pile": null}, {"f": "SAJ", "n": "Origo", "t": "Intézmény", "s": "Sajtó", "c": "2M", "x": "Köröd végén, ha neked van a legtöbb Intézményed, kapsz 1 Támogatottságot.", "q": "2014-ben irányt váltott. Azóta egyenesen megy.", "i": "explore", "k": 1, "p": null, "h": null, "L": false, "tag": "Kormányközeli", "year": null, "pile": null}, {"f": "SAJ", "n": "Bayer Zsolt", "t": "Szereplő", "s": "Publicista", "c": "2M", "x": "**Propaganda**\nAmikor játékba lép, egy célzott ellenfeled veszít 1 Támogatottságot.", "q": "Hegyes toll, hosszú menet.", "i": "edit", "k": 1, "p": 1, "h": 1, "L": true, "tag": "Kormányközeli", "year": null, "pile": null}, {"f": "KOR", "n": "Fülkeforradalom", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban minden szereplő +1/+0-t kap.", "q": "Kétharmad. Először.", "i": "how_to_vote", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2010", "pile": null}, {"f": "KOR", "n": "Alaptörvény", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban az Intézmények 1-gyel olcsóbbak.", "q": "Húsvétkor írták. Azóta is tojásokat raknak bele.", "i": "history_edu", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2011", "pile": null}, {"f": "KOR", "n": "Rezsiharc", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Minden játékos kap 2 Támogatottságot.", "q": "Kisebb számla, kampány a borítékban.", "i": "receipt_long", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2013", "pile": null}, {"f": "KOR", "n": "Illiberális fordulat", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban a Leleplezés alapakció 1-gyel drágább.", "q": "Tusnádfürdőn a demokrácia jelzőt kapott.", "i": "visibility_off", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2014", "pile": null}, {"f": "KOR", "n": "Kerítés a déli határon", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban minden feltartó szereplő +0/+1-et kap.", "q": "Négy méter, két sor, egy plakátkampány.", "i": "fence", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2015", "pile": null}, {"f": "KOR", "n": "G-nap", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Minden játékos, akinek legalább 4 Botránya van, eldob egy lapot.", "q": "2015. február 6. A NER leghosszabb napja.", "i": "bolt", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2015", "pile": null}, {"f": "KOR", "n": "Kvótanépszavazás", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Minden játékos választ: húz egy lapot, vagy kap 2 Támogatottságot.", "q": "Elsöprő „nem”, érvénytelen részvétel.", "i": "ballot", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2016", "pile": null}, {"f": "KOR", "n": "Rabszolgatörvény", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban az Utca-Bázisok {U}{U}-t adnak {U} helyett.", "q": "Túlóra: négyszáz. Tüntető: annál is több.", "i": "front_hand", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2018", "pile": null}, {"f": "KOR", "n": "Önkormányzati fordulat", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "A legkevesebb Támogatottsággal rendelkező játékos (holtverseny esetén mindegyik) kap 3 Támogatottságot.", "q": "Budapest átfestve. Részben.", "i": "location_city", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2019", "pile": null}, {"f": "KOR", "n": "Járvány", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban senki sem kampányolhat. Minden játékos húz egy lapot.", "q": "Kijárási korlátozás. A kutyasétáltatás aranykora.", "i": "coronavirus", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2020", "pile": null}, {"f": "KOR", "n": "Index-ügy", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Dobd el a Hírfolyam lapjait, és tölts fel hármat. Ebben a fordulóban a Toborzás 1-gyel olcsóbb.", "q": "Egy szerkesztőség felállt. A szék maradt.", "i": "sync_alt", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2020", "pile": null}, {"f": "KOR", "n": "Ellenzéki előválasztás", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Minden játékos megnézi a paklija felső 3 lapját, egyet kézbe vesz, a többit alulra teszi.", "q": "Egy hónapig mindenki miniszterelnök-jelölt volt.", "i": "how_to_reg", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2021", "pile": null}, {"f": "KOR", "n": "Háború és infláció", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban minden nem Bázis lap 1-gyel drágább.", "q": "Árstop. A polcok is megálltak.", "i": "trending_down", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2022", "pile": null}, {"f": "KOR", "n": "Pedagógus-tüntetések", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Minden játékos, akinek van Utca-Bázisa, kap 2 Támogatottságot.", "q": "A legjobb órát az utcán tartották.", "i": "school", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2023", "pile": null}, {"f": "KOR", "n": "Kegyelmi ügy", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban a Mentelmi jog nem hat. A legtöbb Botránnyal rendelkező játékos veszít 3 Támogatottságot.", "q": "Egy aláírás, két lemondás.", "i": "gavel", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2024", "pile": null}, {"f": "KOR", "n": "Új kihívó", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban a Disszidens lapok 2-vel olcsóbbak. Minden játékos tehet egy Szimpátia jelzőt egy szereplőjére.", "q": "Egy interjú, másfél óra, kétéves kampány.", "i": "person_add", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2024", "pile": null}, {"f": "KOR", "n": "Hangulatváltás", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "A legtöbb Támogatottsággal rendelkező játékos veszít 2-t, a legkevesebbel rendelkező kap 2-t.", "q": "A közvélemény-kutatások megfordultak. A kutatók is.", "i": "swap_vert", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2025", "pile": null}, {"f": "KOR", "n": "Választási hajrá", "t": "Esemény", "s": "Közéleti esemény", "c": "", "x": "Ebben a fordulóban minden szereplő +1/+0-t kap, és a Leleplezés alapakció 1-gyel olcsóbb.", "q": "2026. április 12. Kétharmad. Megint.", "i": "how_to_vote", "k": 1, "p": null, "h": null, "L": false, "tag": null, "year": "2026", "pile": null}, {"f": "JEL", "n": "Kerítés", "t": "Jelző", "s": "Szereplő-jelző", "c": "", "x": "**Kerítés**", "q": "Drót, oszlop, kamera.", "i": "fence", "k": 4, "p": 0, "h": 3, "L": false, "tag": null, "year": null, "pile": null}, {"f": "JEL", "n": "Szakadár", "t": "Jelző", "s": "Szereplő-jelző", "c": "", "x": "Toroczkai László, Volner János és a Pártszakadás hozza létre.", "q": "Új párt, régi arcok.", "i": "call_split", "k": 4, "p": 1, "h": 1, "L": false, "tag": null, "year": null, "pile": null}];
+const FNAME = {NER:"NER",OSZ:"Összefogás",TIS:"Tisza",RAD:"Radikálisok",SAJ:"Hírfolyam",KOR:"Esemény",JEL:"Jelző"};
+const FCODE = {NER:"NER",OSZ:"ÖSZ",TIS:"TSZ",RAD:"RAD",SAJ:"HÍR",KOR:"ESE",JEL:"JEL"};
+const RES_ICON = {"Forint":"F","Média":"M","Utca":"U","Forint / Média":"FM","Utca / Média":"UM"};
+// numbering within faction
+const idx = {}; CARDS.forEach(c=>{idx[c.f]=(idx[c.f]||0)+1; c.no=idx[c.f];});
+const tot = {}; CARDS.forEach(c=>{tot[c.f]=(tot[c.f]||0)+1;});
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function pipHTML(ch){ if(ch==="T") return '<span class="pip T">↷</span>'; if("FMU".includes(ch)) return `<span class="pip ${ch}">${ch}</span>`; return `<span class="pip G">${ch}</span>`;}
+function costHTML(c){ if(!c) return ""; let out="", m=c.match(/^(\d+)?([FMU]*)$/); if(!m) return ""; if(m[1]) out+=pipHTML(m[1]); for(const ch of m[2]) out+=pipHTML(ch); return out;}
+function rich(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\{([FMUT1-9])\}/g,(_,c)=>pipHTML(c)).split("\n").map(p=>`<p>${p}</p>`).join(""); }
+// keyword reminder text (shown on the cards themselves)
+const REM = [
+ ["Lendület", /^Lendület/, "már a kijátszása körében támadhat"],
+ ["Mentelmi jog", /^Mentelmi jog/, "ellenfeleid lapjai nem célozhatják"],
+ ["Propaganda", /^Propagand/, "csak két szereplő együtt tarthatja fel"],
+ ["Oknyomozó", /^Oknyomozó/, "ha sebez egy szereplőt, az a Süllyesztőbe kerül"],
+ ["Kerítés", /^Kerítés/, "nem támadhat"],
+ ["Radikális", /^Radikális/, "ha egyedül támad, +1/+0"],
+ ["Disszidens", /^Disszidens/, "1-gyel olcsóbb, ha egy ellenfelednek van Intézménye"],
+ ["Mozgalom", /^Mozgalom/, "Bázis kijátszásakor +1 Szimpátia jelzőt kap, legfeljebb 3-at"],
+ ["Szakadás", /^Szakadás/, "ha a Süllyesztőbe kerül, 1/1-es Szakadár jelző jön létre"],
+ ["Botrány", /^Botrány (\d)/, null],
+];
+function remFor(tok){
+  for(const [name,re,txt] of REM){ const m=tok.match(re); if(m){ return [name, txt===null?`amikor játékba lép, kapsz ${m[1]} Botrányt`:txt]; } }
+  return null;
+}
+function richCard(c){
+  const lines=c.x.split("\n"); const notes=[]; const seen=new Set(); let len=0;
+  const out=lines.map(line=>{
+    const toks=line.split(" · ");
+    const allKw=toks.every(t=>/^\*\*[^*]+\*\*$/.test(t.trim()) && remFor(t.trim().slice(2,-2)));
+    if(allKw){
+      return toks.map(t=>{const k=t.trim().slice(2,-2); const [n,r]=remFor(k); seen.add(n); len+=r.length+3; return `<b>${esc(k)}</b> <span class="c-rem">(${r})</span>`;}).join("<br>");
+    }
+    let h=esc(line);
+    // named abilities ("**X** — ...") explain themselves
+    for(const m of line.matchAll(/\*\*([^*]+)\*\*/g)){
+      const after=line.slice(m.index+m[0].length);
+      if(after.startsWith(" — ")) continue;
+      const r=remFor(m[1]); if(r && !seen.has(r[0])){ seen.add(r[0]); notes.push(`${r[0]}: ${r[1]}`); len+=r[0].length+r[1].length+4; }
+    }
+    return h;
+  });
+  let html=out.map(l=>l.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\{([FMUT1-9])\}/g,(_,ch)=>pipHTML(ch)));
+  let first=true;
+  html=html.map(l=>{ if(first && l.includes("Szimpátia jelző")){ first=false; len+=9; return l.replace(/Szimpátia jelző(t|vel)?/, m=>`${m} (+1/+1)`);} return l; });
+  if(notes.length) html.push(`<span class="c-rem">(${notes.join("; ")}.)</span>`);
+  return {html: html.map(p=>`<p>${p}</p>`).join(""), extra: len};
+}
+
+function cardHTML(c, opts={}){
+  const len = c.n.length;
+  const nameCls = len>22?"xlong":(len>15?"long":"");
+  const rc = richCard(c);
+  const textLen = c.x.length + rc.extra*0.9 + c.q.length*0.85;
+  const dense = textLen>330?"xxdense":(textLen>285?"xdense":(textLen>215?"dense":""));
+  let art;
+  if(typeof cardIllustration === "function" && CARD_IMAGES[c.n]){
+    art = cardIllustration(c.n, true);
+    if(c.t === "Esemény") art += `<span class="c-art-year">${c.year}</span>`;
+  } else if(c.t==="Esemény"){
+    art = `<span class="c-year">${c.year}</span><span class="msym side">${c.i}</span>`;
+  } else if(c.t==="Szereplő"){
+    art = `<span class="msym ghost">${c.i}</span><span class="medal"><span class="msym">${c.i}</span></span>`;
+  } else {
+    art = `<span class="msym">${c.i}</span>`;
+  }
+  if(c.t==="Bázis" && RES_ICON[c.s]) art += `<span class="c-respip">${[...RES_ICON[c.s]].map(pipHTML).join("")}</span>`;
+  const legend = c.L ? '<span class="c-legend">◆ KÖZSZEREPLŐ</span>' : '';
+  const tag = c.tag ? `<span class="c-tag ${c.tag}">${c.tag}</span>` : '';
+  const stats = (c.p!==null && c.p!==undefined) ? `<span class="c-stats">${c.p}<i>/</i>${c.h}</span>` : '';
+  const copies = (opts.copies!==false && c.k>1) ? `<span class="copies">×${c.k}</span>` : '';
+  return `<article class="card f-${c.f} t-${c.t}" data-f="${c.f}">
+    <div class="frame">
+      <header class="c-top"><h4 class="c-name ${nameCls}">${esc(c.n)}</h4><div class="c-cost">${costHTML(c.c)}</div></header>
+      <div class="c-art">${legend}${tag}${art}</div>
+      <div class="c-type"><b>${c.t}</b> — ${esc(c.s)}</div>
+      <div class="c-text ${dense}">${rc.html}<p class="c-flav">${esc(c.q)}</p></div>
+      <footer class="c-foot"><span>${FCODE[c.f]} · ${String(c.no).padStart(2,"0")}/${tot[c.f]}</span>${stats}</footer>
+    </div>${copies}
+  </article>`;
+}
+const byName = n => CARDS.find(c=>c.n===n);
+
+// hero fan
+document.getElementById("fan").innerHTML = ["Orbán Viktor","Gyurcsány Ferenc","Magyar Péter","Toroczkai László"].map(n=>cardHTML(byName(n),{copies:false})).join("");
+document.querySelectorAll("#fan .card").forEach((el,i)=>el.style.setProperty("--hx",["-128%","-80%","-30%","18%"][i]));
+
+// anatomy
+const an = document.getElementById("anatomy-card");
+an.innerHTML = cardHTML(byName("Lázár János"),{copies:false}) +
+  [[-3,6],[103,6],[-3,30],[-3,55.5],[-3,70],[-3,86],[103,96]].map(([x,y],i)=>`<span class="callout" style="left:calc(${x}% - 13px);top:calc(${y}% - 13px)">${i+1}</span>`).join("");
+
+// combat example
+document.getElementById("example").innerHTML = cardHTML(byName("Lázár János"),{copies:false}) + cardHTML(byName("Hadházy Ákos"),{copies:false}) +
+  (()=>{const L=byName("Lázár János"),H=byName("Hadházy Ákos");return `<p><b>Példa.</b> Lázár János (${L.p}/${L.h}) <span class="kw">Lendülettel</span> már a kijátszása körében támad; az ellenfél Hadházy Ákossal (${H.p}/${H.h}) tartja fel. Lázár ${L.p} sebzést okoz, ez ${L.p>=H.h?"eléri":"nem éri el"} Hadházy ${H.h} Hitelességét, így Hadházy ${L.p>=H.h?"a Süllyesztőbe kerül":"túléli"}. Hadházy csak ${H.p}-et sebez, de <span class="kw">Oknyomozó</span>: bármennyi sebzés elég, így Lázár is a Süllyesztőbe kerül. Egy olcsó lap elvitt egy drága minisztert.</p>`;})();
+
+
+// playtest results
+const RES = {
+ "n2": 12000,
+ "fac": {
+  "NER": 50.2,
+  "OSZ": 49.0,
+  "TIS": 49.8,
+  "RAD": 51.0
+ },
+ "mat": {
+  "NER-OSZ": 46.1,
+  "NER-TIS": 48.3,
+  "NER-RAD": 56.1,
+  "OSZ-NER": 53.9,
+  "OSZ-TIS": 44.2,
+  "OSZ-RAD": 49.0,
+  "TIS-NER": 51.7,
+  "TIS-OSZ": 55.8,
+  "TIS-RAD": 41.9,
+  "RAD-NER": 43.9,
+  "RAD-OSZ": 51.0,
+  "RAD-TIS": 58.1
+ },
+ "seat": [
+  52.1,
+  47.9
+ ],
+ "rounds": 10.4,
+ "r10": 7,
+ "r50": 10,
+ "r90": 14,
+ "mull": 12.9,
+ "cyc": 0.94,
+ "n4": 1920,
+ "fac4": {
+  "NER": 21.0,
+  "OSZ": 33.9,
+  "TIS": 22.4,
+  "RAD": 22.6
+ },
+ "seat4": [
+  21.7,
+  27.1,
+  26.1,
+  25.1
+ ]
+}, CHG = [["NER", "Állami megrendelés", [["k", 4, 5]]], ["NER", "Megyei lapok", [["k", 4, 5]]], ["NER", "Uniós forrás", [["x", "Kimerítve lép játékba, és kapsz 1 Botrányt.\n{T}: {F} vagy {M}.", "Kimerítve lép játékba.\n{T}: {F} vagy {M}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot."]]], ["NER", "Békemenet", [["x", "Amikor játékba lép, kapsz 1 Támogatottságot.\n{T}: {U}.", "Amikor játékba lép, kapsz 1 Támogatottságot.\n{T}: {U} vagy {F}.\n**Csere** {1} — dobd el a kezedből, és húzz egy lapot."]]], ["NER", "Orbán Viktor", [["c", "3FM", "2FM"]]], ["NER", "Mészáros Lőrinc", [["p", 0, 1]]], ["NER", "Tiborcz István", [["p", 1, 2]]], ["NER", "Gulyás Gergely", [["p", 1, 2], ["x", "**Kormányinfó** — Amikor játékba lép, távolíts el legfeljebb 2 Botrányt magadról.", "**Kormányinfó** — Amikor játékba lép, távolíts el legfeljebb 3 Botrányt magadról."]]], ["NER", "Kubatov Gábor", [["p", 1, 2]]], ["NER", "Rogán Antal", [["p", 2, 3], ["h", 3, 4]]], ["NER", "Szijjártó Péter", [["p", 2, 3]]], ["NER", "Kövér László", [["p", 1, 2]]], ["NER", "Matolcsy György", [["p", 1, 2], ["x", "{T}: adj hozzá két tetszőleges erőforrást. Kapsz 2 Botrányt.", "{T}: adj hozzá két tetszőleges erőforrást. Kapsz 1 Botrányt."]]], ["NER", "Novák Katalin", [["p", 1, 2], ["x", "**Mentelmi jog**\n**Kegyelem** — {T}: egy szereplőd a Süllyesztődből visszakerül a kezedbe. Kapsz 2 Botrányt.\nHa egy ellenfél Leleplezést hajt végre ellened, Novák Katalin a Süllyesztőbe kerül.", "**Mentelmi jog**\n**Kegyelem** — {T}: egy szereplőd a Süllyesztődből visszakerül a kezedbe. Kapsz 2 Botrányt."]]], ["NER", "Lázár János", [["p", 3, 4]]], ["NER", "KESMA", [["c", "2FM", "1FM"], ["x", "**Botrány 2**\nMédia-Bázisaid {M}{M}-et adnak {M} helyett.", "**Botrány 1**\nMédia-Bázisaid {M}{M}-et adnak {M} helyett."]]], ["NER", "Közmédia", [["x", "Köröd elején minden ellenfeled, akinek kevesebb Média-Bázisa van, mint neked, veszít 1 Támogatottságot.", "Köröd elején minden ellenfeled veszít 1 Támogatottságot."]]], ["NER", "Rezsicsökkentés", [["x", "Kapsz 4 Támogatottságot.", "Kapsz 5 Támogatottságot."]]], ["NER", "Plakátkampány", [["c", "1F", "3F"]]], ["NER", "Bűnbak", [["x", "Áldozz fel egy szereplődet. Távolíts el 3 Botrányt magadról, és húzz egy lapot.", "Áldozz fel egy szereplődet. Távolíts el 3 Botrányt magadról, és húzz két lapot."]]], ["OSZ", "Független sajtó", [["k", 4, 5]]], ["OSZ", "Utcai tüntetés", [["k", 4, 5]]], ["OSZ", "Fekete-Győr András", [["p", 2, 3]]], ["OSZ", "Hadházy Ákos", [["c", "1M", "2M"]]], ["OSZ", "Donáth Anna", [["x", "**Brüsszel** — {T}: egy célzott Intézmény képességei a következő köröd elejéig nem hatnak.", "**Brüsszel** — Amikor játékba lép, egy célzott Intézmény visszakerül a tulajdonosa kezébe."]]], ["OSZ", "Előválasztási önkéntes", [["h", 1, 2]]], ["OSZ", "Kiszivárgott hangfelvétel", [["x", "**Leleplezés** — vegyél el legfeljebb 3 Botrányt egy ellenfeledtől; annyi Támogatottságot veszít.", "**Leleplezés** — vegyél el legfeljebb 2 Botrányt egy ellenfeledtől; annyi Támogatottságot veszít."]]], ["TIS", "Tisza-sziget", [["k", 5, 6]]], ["TIS", "Közösségi média", [["k", 4, 5]]], ["TIS", "Magyar Péter", [["x", "**Disszidens** · **Mozgalom**\nAmíg legalább 4 Szimpátia jelző van rajta, **Propagandája** és **Lendülete** van.", "**Disszidens** · **Mozgalom**\nAmíg legalább 3 Szimpátia jelző van rajta, **Propagandája** és **Lendülete** van."]]], ["TIS", "Tarr Zoltán", [["h", 1, 2]]], ["TIS", "Ruszin-Szendi Romulusz", [["h", 4, 3]]], ["TIS", "Tisza-szigetes önkéntes", [["c", "U", "1U"]]], ["TIS", "Mozgósítás", [["c", "U", "1U"]]], ["RAD", "Falugyűlés", [["k", 5, 6]]], ["RAD", "Alternatív média", [["k", 4, 5]]], ["RAD", "Jakab Péter", [["x", "Amikor játékba lép, egy célzott ellenfeled kap 2 Botrányt.", "Amikor játékba lép, egy célzott ellenfeled kap 3 Botrányt."]]], ["RAD", "Sneider Tamás", [["p", 3, 2]]], ["RAD", "Nemzeti radikális aktivista", [["p", 2, 1], ["h", 1, 2]]], ["RAD", "Határvadász", [["p", 1, 2]]], ["RAD", "Utcai demonstráció", [["x", "3 sebzés egy célzott szereplőnek vagy ellenfélnek.", "3 sebzés egy célzott szereplőnek, vagy 2 sebzés egy célzott ellenfélnek."]]], ["RAD", "Határzár", [["c", "2F", "3F"], ["x", "Ellenfeleid csak akkor támadhatnak meg téged egy szereplővel, ha szereplőnként fizetnek 1-et.", "Ellenfeleid nem kaphatnak Támogatottságot, és nem távolíthatnak el Botrányt magukról."]]], ["RAD", "Néppárti fordulat", [["x", "Egy célzott szereplő +0/+3-at kap a kör végéig. Ha a tiéd, kapsz 2 Támogatottságot is.", "Egy célzott szereplő +0/+3-at kap a kör végéig. Ha a tiéd, kapsz 2 Támogatottságot, és húzol egy lapot."]]], ["SAJ", "Telex", [["c", "2M", "1M"]]], ["SAJ", "Partizán", [["c", "2M", "3M"], ["x", "{T}: húzz egy lapot, majd dobj el egy lapot.", "Amikor játékba lép, húzz két lapot."]]], ["SAJ", "Átlátszó", [["x", "Ellenfeleid Botrányküszöbe 6 helyett 4.", "Amikor játékba lép, minden ellenfeled kap 1 Botrányt.\nEllenfeleid Botrányküszöbe 6 helyett 4."]]], ["SAJ", "HVG", [["c", "2M", "1M"], ["x", "Köröd végén, ha ebben a körben Leleplezést hajtottál végre, húzz egy lapot.", "{T}: **Leleplezés** — vegyél el 1 Botrányt egy ellenfeledtől; az veszít 1 Támogatottságot."]]], ["SAJ", "Index", [["x", "{T}: nézd meg a paklid felső két lapját, egyet tegyél alulra.\nHa bármely játékos Kormányközeli lapot toboroz, az Indexet ő irányítja tovább.", "Amikor játékba lép, húzz egy lapot.\nAkcióid 1-gyel olcsóbbak (a tetszőleges részből)."]]], ["SAJ", "Hír TV", [["c", "2M", "1M"], ["x", "Amikor játékba lép, kapsz 1 Botrányt.\n{T}: {M}.", "{T}: {M}."]]], ["SAJ", "TV2", [["c", "3M", "2M"]]], ["SAJ", "Megafon", [["c", "2F", "2M"], ["x", "{T}, fizess {F}-et: minden ellenfeled veszít 1 Támogatottságot.", "{T}, fizess {M}-et: minden ellenfeled veszít 1 Támogatottságot."]]], ["SAJ", "Origo", [["c", "1M", "2M"]]], ["SAJ", "Bayer Zsolt", [["c", "1M", "2M"], ["p", 2, 1]]]];
+(function(){
+  const F=["NER","OSZ","TIS","RAD"]; const hu=v=>String(v).replace(".",",");
+  document.getElementById("t-stats").innerHTML =
+    `<div><b>${(RES.n2+RES.n4).toLocaleString("hu-HU")}</b>végső tesztjátszma</div><div><b>${hu(Math.min(...F.map(f=>RES.fac[f])))}–${hu(Math.max(...F.map(f=>RES.fac[f])))}%</b>frakciók győzelmi aránya</div><div><b>${hu(RES.seat[0])} / ${hu(RES.seat[1])}%</b>kezdő / második játékos</div><div><b>${RES.r50}</b>forduló a medián játszma</div><div><b>${RES.r90}</b>fordulón belül véget ér a játszmák 90%-a</div>`;
+  const cell=v=>{const d=v-50;const a=Math.min(Math.abs(d)/8,1)*55;const col=d>=0?"var(--tis)":"var(--stamp)";return `<td style="background:color-mix(in srgb,${col} ${a.toFixed(0)}%,var(--panel))">${String(v).replace(".",",")}</td>`;};
+  let h=`<thead><tr><th class="rh"></th>${F.map(f=>`<th style="--fc:var(--${f.toLowerCase()})"><i></i>${FNAME[f].slice(0,4)}</th>`).join("")}<th>Össz.</th></tr></thead><tbody>`;
+  F.forEach(r=>{h+=`<tr><th class="rh" style="--fc:var(--${r.toLowerCase()})"><i></i>${FNAME[r]}</th>`+F.map(c=>r===c?'<td class="self">–</td>':cell(RES.mat[r+"-"+c])).join("")+cell(RES.fac[r])+"</tr>";});
+  document.getElementById("t-mat").innerHTML=h+"</tbody>";
+  document.getElementById("t-mp").innerHTML=F.map(f=>`<div class="mp-row" style="--fc:var(--${f.toLowerCase()})"><span>${FNAME[f]}</span><div class="mp-bar"><span style="width:${RES.fac4[f]*2}%"></span></div><b>${String(RES.fac4[f]).replace(".",",")}%</b></div>`).join("")+`<p class="mp-note">A szaggatott vonal a 25%-os egyensúlyi pont. Ülésrend szerint: ${RES.seat4.map((v,i)=>`${i+1}. ${String(v).replace(".",",")}%`).join(" · ")}.</p>`;
+  const LBL={c:"Költség",p:"Befolyás",h:"Hitelesség",x:"Szöveg",k:"Példányszám"};
+  const fmt=(f,v)=>f==="c"?(costHTML(v)||"–"):f==="x"?rich(v).replace(/<\/?p>/g," "):v;
+  const groups={}; CHG.forEach(([f,n,d])=>{(groups[f]=groups[f]||[]).push([n,d]);});
+  document.getElementById("t-changes").innerHTML=Object.entries(groups).map(([f,items])=>`<div class="ch-grp" style="--fc:var(--${f.toLowerCase()})"><h5>${FNAME[f]} · ${items.length}</h5><ul>${items.map(([n,d])=>`<li><b>${esc(n)}</b>${d.map(([k,a,b])=>k==="x"?`<div class="d">${LBL[k]}: <em>${fmt(k,b)}</em></div>`:`<div class="d">${LBL[k]}: ${fmt(k,a)} → <em>${fmt(k,b)}</em></div>`).join("")}</li>`).join("")}</ul></div>`).join("");
+})();
+
+// keywords
+const KW = [
+ ["Csere","minden Bázis","Fizess 1 tetszőleges erőforrást, dobd el ezt a Bázist a kezedből, és húzz egy lapot. Bármikor használhatod, amikor fizetni tudsz."],
+ ["Lendület","mind","A játékba lépése körében is támadhat, és használhatja ↷ képességét."],
+ ["Mentelmi jog","NER, ÖSZ","Ellenfeleid Akciói és képességei nem célozhatják. A Kegyelmi ügy Esemény alatt nem hat."],
+ ["Propaganda","NER, TSZ","Csak legalább két szereplő tarthatja fel együtt."],
+ ["Oknyomozó","ÖSZ, HÍR","Ha sebzést okoz egy szereplőnek, az a Süllyesztőbe kerül."],
+ ["Kerítés","RAD","Nem támadhat, de feltarthat."],
+ ["Radikális","RAD","Ha egyedül támad, +1/+0-t kap."],
+ ["Botrány N","mind","Amikor játékba lép, kapsz N Botrányt."],
+ ["Leleplezés","mind","Botrányt veszel el egy ellenféltől; minden elvett Botrány után 1 Támogatottságot veszít."],
+ ["Kétharmad","NER","Orbán Viktor képességének feltétele: legalább két Intézményed van (a Hírfolyam-intézmények is számítanak)."],
+ ["Összefogás","ÖSZ","Feltétel: legalább három különböző pártú szereplőd van. A Független is pártnak számít, Schiffer András nem számít bele. A Közös jelölt (Márki-Zay) ugyanezt a feltételt használja."],
+ ["Disszidens","TSZ","1-gyel olcsóbb (a tetszőleges részből), ha bármely ellenfelednek van Intézménye."],
+ ["Mozgalom","TSZ","Valahányszor Bázist teszel játékba, ez a szereplő kap egy Szimpátia jelzőt, legfeljebb 3-ig."],
+ ["Szakadás","RAD","Amikor a Süllyesztőbe kerül, hozz létre egy 1/1-es Szakadár jelzőt."],
+ ["◆ Közszereplő","mind","Csak jelölés: valós személy, akiből egy példány van a pakliban. Nincs szabályhatása."],
+];
+document.getElementById("kw-body").innerHTML = KW.map(k=>`<tr><td>${k[0]}</td><td>${k[1]}</td><td>${k[2]}</td></tr>`).join("");
+
+// gallery
+const grid = document.getElementById("grid");
+grid.innerHTML = CARDS.map(c=>cardHTML(c)).join("");
+const els = [...grid.children];
+const counts = {ALL:0}; CARDS.forEach(c=>{counts[c.f]=(counts[c.f]||0)+c.k; counts.ALL+=c.k;});
+Object.entries(counts).forEach(([k,v])=>{const e=document.getElementById("c-"+k); if(e) e.textContent=v;});
+let curF="ALL";
+function apply(){
+  const q=(document.getElementById("q").value||"").trim().toLowerCase();
+  let shown=0, copies=0;
+  els.forEach((el,i)=>{const c=CARDS[i];
+    const ok=(curF==="ALL"||c.f===curF)&&(!q||(c.n+" "+c.x+" "+c.s+" "+c.q).toLowerCase().includes(q));
+    el.hidden=!ok; if(ok){shown++;copies+=c.k;}});
+  document.getElementById("gcount").textContent=`${shown} különböző lap · ${copies} példány`;
+}
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true"); curF=b.dataset.f; apply();
+  try{localStorage.setItem("kh-filter",curF);}catch(e){}
+}));
+document.getElementById("q").addEventListener("input",apply);
+try{const s=localStorage.getItem("kh-filter"); if(s){const b=document.querySelector(`.filters button[data-f="${s}"]`); if(b) b.click();}}catch(e){}
+apply();
+</script>
+
+</body></html>
