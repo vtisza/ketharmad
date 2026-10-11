@@ -87,7 +87,7 @@ function drawSetup() {
   const facBtn = f => `<button class="fac f-${f}" data-fac="${f}" aria-pressed="${!c.spectate && c.me === f}">
       <span class="check msym">check</span>
       <div class="fac-top"><h3>${FACTION_NAME[f]}</h3><span>${FDESC[f][0]}</span></div>
-      <div class="fac-cards">${FDESC[f][2].map(n => cardFace(n)).join('')}</div>
+      <div class="fac-cards">${FDESC[f][2].map(n => cardFace(n, true)).join('')}</div>
       <p>${FDESC[f][1]}</p></button>`;
   const oppRow = (o, i) => `<div class="opp-row">
       <span class="lbl">${c.spectate ? (i + 1) + '. gép' : (i + 1) + '. ellenfél'}</span>
